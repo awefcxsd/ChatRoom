@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class DebugWindow extends JFrame {
 	/**
@@ -83,6 +84,7 @@ public class DebugWindow extends JFrame {
 		panel.add(lblPort);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(158, 24, 321, 278);
 		panel.add(scrollPane);
 		
