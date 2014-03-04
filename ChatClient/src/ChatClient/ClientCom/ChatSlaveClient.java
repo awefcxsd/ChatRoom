@@ -62,7 +62,7 @@ public class ChatSlaveClient implements Runnable {
 			String boradCastMessage = transferLine.split(" ", 3)[2];
 			String Sender = transferLine.split(" ", 3)[1];
 			SimpleAttributeSet recv = new SimpleAttributeSet();
-			StyleConstants.setForeground(recv, Color.RED);
+			StyleConstants.setForeground(recv, Color.BLACK);
 			GUIObject.addText(Sender + " : " + boradCastMessage, recv);
 		} else if (transferLine.startsWith("/newUser")) {
 			String newUser = transferLine.split(" ", 2)[1];

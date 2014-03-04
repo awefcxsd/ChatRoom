@@ -4,12 +4,14 @@ import javax.swing.JFrame;
 
 import java.awt.GridLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.UIManager;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 
@@ -17,16 +19,21 @@ import ChatClient.ClientCom.ChatSlaveClient;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JComboBox;
+
 import java.awt.List;
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.JTabbedPane;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 
 public class ChatClientWindow extends JFrame {
@@ -51,75 +58,84 @@ public class ChatClientWindow extends JFrame {
 
 		// {{ Layout set up
 		setResizable(false);
-		setTitle("Debug Client");
-		setSize(833, 521);
+		setTitle("ChatClient");
+		setSize(883, 574);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
-		JPanel panel = new JPanel();
+		BackGroundPanel panel = new BackGroundPanel();
 		getContentPane().add(panel);
 		panel.setLayout(null);
-
+		
 		EnterIP = new JTextField();
 		EnterIP.setText("140.112.18.205");
-		EnterIP.setBounds(10, 24, 124, 21);
+		EnterIP.setBounds(10, 36, 124, 21);
 		panel.add(EnterIP);
 		EnterIP.setColumns(10);
 
 		EnterPort = new JTextField();
 		EnterPort.setText("9987");
 		EnterPort.setColumns(10);
-		EnterPort.setBounds(10, 79, 124, 21);
+		EnterPort.setBounds(10, 91, 124, 21);
 		panel.add(EnterPort);
 
 		final JButton btnConnect = new JButton("Connect");
 
-		btnConnect.setBounds(10, 172, 87, 23);
+		btnConnect.setBounds(10, 184, 87, 23);
 		panel.add(btnConnect);
 
 		JLabel lblIp = new JLabel("IP");
-		lblIp.setBounds(10, 10, 46, 15);
+		lblIp.setForeground(Color.WHITE);
+		lblIp.setBounds(10, 22, 46, 15);
 		panel.add(lblIp);
 
 		JLabel lblPort = new JLabel("Port");
-		lblPort.setBounds(10, 55, 46, 15);
+		lblPort.setForeground(Color.WHITE);
+		lblPort.setBounds(10, 67, 46, 15);
 		panel.add(lblPort);
 
 		JLabel lblName = new JLabel("Name");
-		lblName.setBounds(10, 110, 46, 15);
+		lblName.setForeground(Color.WHITE);
+		lblName.setBounds(10, 122, 46, 15);
 		panel.add(lblName);
 
 		EnterName = new JTextField();
 		EnterName.setText("");
 		EnterName.setColumns(10);
-		EnterName.setBounds(10, 135, 124, 21);
+		EnterName.setBounds(10, 147, 124, 21);
 		panel.add(EnterName);
 
+
 		userList = new List();
-		userList.setBackground(Color.WHITE);
 		userList.setMultipleSelections(false);
-		userList.setBounds(651, 47, 143, 419);
+		userList.setBounds(689, 59, 143, 419);
 		panel.add(userList);
 
 		JLabel lblUserOnline = new JLabel("User Online");
-		lblUserOnline.setForeground(Color.BLACK);
+		lblUserOnline.setBackground(Color.WHITE);
+		lblUserOnline.setForeground(Color.WHITE);
 		lblUserOnline.setFont(new Font("Bauhaus 93", Font.PLAIN, 25));
-		lblUserOnline.setBounds(651, 8, 143, 43);
+		lblUserOnline.setBounds(689, 20, 143, 43);
 		panel.add(lblUserOnline);
 
+		UIManager.put("TabbedPane.contentOpaque", false);
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(158, 23, 477, 443);
+		tabbedPane.setBackground(Color.WHITE);
+		tabbedPane.setBounds(171, 35, 477, 443);
 		panel.add(tabbedPane);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(255, 255, 255, 100));
 		tabbedPane.addTab("Main", null, panel_1, null);
 		panel_1.setLayout(null);
 
 		scrollPane = new JScrollPane();
+		scrollPane.setBackground(new Color(255, 255, 255, 255));
 		scrollPane.setBounds(0, 0, 472, 332);
 		panel_1.add(scrollPane);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		JTextPane textPane = new JTextPane();
+		textPane.setBackground(new Color(255, 255, 255, 255));
 		scrollPane.setViewportView(textPane);
 		textPane.setEditable(false);
 
@@ -132,12 +148,8 @@ public class ChatClientWindow extends JFrame {
 		btnSend.setBounds(10, 381, 87, 23);
 		panel_1.add(btnSend);
 
-		
-
-		
-
 		// }}
-		
+
 		doc = textPane.getStyledDocument();
 
 		ClientObject = new ChatSlaveClient(this);
@@ -202,4 +214,9 @@ public class ChatClientWindow extends JFrame {
 		userList.removeAll();
 	}
 
+	
+	
+	
+	
+	
 }
