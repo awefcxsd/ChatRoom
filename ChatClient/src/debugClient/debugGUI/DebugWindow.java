@@ -17,6 +17,8 @@ import debugClient.degubCom.Client;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 public class DebugWindow extends JFrame {
 	/**
@@ -44,11 +46,6 @@ public class DebugWindow extends JFrame {
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
 		panel.setLayout(null);
-
-		JTextPane textPane = new JTextPane();
-		textPane.setEditable(false);
-		textPane.setBounds(158, 10, 349, 298);
-		panel.add(textPane);
 
 		EnterMessage = new JTextField();
 		
@@ -84,12 +81,20 @@ public class DebugWindow extends JFrame {
 		JLabel lblPort = new JLabel("Port");
 		lblPort.setBounds(10, 55, 46, 15);
 		panel.add(lblPort);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(158, 24, 321, 278);
+		panel.add(scrollPane);
+		
+				JTextPane textPane = new JTextPane();
+				scrollPane.setViewportView(textPane);
+				textPane.setEditable(false);
+				
+						doc = textPane.getStyledDocument();
 
 		// }}
 
 		ClientObject = new Client(this);
-
-		doc = textPane.getStyledDocument();
 
 		//{{ Event
 		btnConnect.addActionListener(new ActionListener() {
@@ -127,5 +132,4 @@ public class DebugWindow extends JFrame {
 
 		}
 	}
-
 }
