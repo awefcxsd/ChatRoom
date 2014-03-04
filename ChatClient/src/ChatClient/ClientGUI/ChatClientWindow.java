@@ -183,5 +183,10 @@ public class ChatClientWindow extends JFrame {
 	public void removeUser(String other) {
 		userList.remove(other);
 	}
+
+	public void userListClear() {
+		// TODO Auto-generated method stub
+		userList.removeAll();
+	}
 	
 }

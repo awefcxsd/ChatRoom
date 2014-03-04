@@ -85,6 +85,12 @@ public class ChatSlaveClient implements Runnable {
 		username = name;
 
 		// create socket
+		try {
+			socket.close();
+			GUIObject.userListClear();
+		} catch (Exception e) {
+
+		}
 
 		try {
 			socket = new Socket(InetAddress.getByName(serverIP), port);
