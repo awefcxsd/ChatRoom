@@ -6,14 +6,15 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
 
-public class Client implements Runnable {
+public class MasterClient implements Runnable {
 	private Server mainThread;
 	private Socket sock;
 	private int id;
 	private DataInputStream is;
 	private DataOutputStream os;
+	private String name;
 
-	public Client(Server server, Socket s, int i) {
+	public MasterClient(Server server, Socket s, int i) {
 		// TODO Auto-generated constructor stub
 		try {
 			mainThread = server;

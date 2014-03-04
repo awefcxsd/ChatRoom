@@ -1,4 +1,4 @@
-package debugClient.debugGUI;
+package ChatClient.ClientGUI;
 
 import javax.swing.JFrame;
 
@@ -13,15 +13,20 @@ import javax.swing.JLabel;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 
-import debugClient.degubCom.Client;
+import ChatClient.ClientCom.ChatSlaveClient;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JComboBox;
+import java.awt.List;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JTabbedPane;
 
-public class DebugWindow extends JFrame {
+public class ChatClientWindow extends JFrame {
 	/**
 	 * 
 	 */
@@ -29,19 +34,20 @@ public class DebugWindow extends JFrame {
 	private JTextField EnterMessage;
 	private JTextField EnterIP;
 	private JTextField EnterPort;
-	private Client ClientObject;
+	private ChatSlaveClient ClientObject;
 	private StyledDocument doc;
 	public String ip;
 	public int port;
 	public String name;
+	private JTextField EnterName;
 
-	public DebugWindow() {
+	public ChatClientWindow() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		// {{ Layout set up
 		setResizable(false);
 		setTitle("Debug Client");
-		setSize(560, 430);
+		setSize(833, 626);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		JPanel panel = new JPanel();
@@ -50,12 +56,12 @@ public class DebugWindow extends JFrame {
 
 		EnterMessage = new JTextField();
 
-		EnterMessage.setBounds(158, 318, 309, 21);
+		EnterMessage.setBounds(158, 488, 309, 21);
 		panel.add(EnterMessage);
 		EnterMessage.setColumns(10);
 
 		JButton btnSend = new JButton("Send");
-		btnSend.setBounds(158, 349, 87, 23);
+		btnSend.setBounds(158, 519, 87, 23);
 		panel.add(btnSend);
 
 		EnterIP = new JTextField();
@@ -72,7 +78,7 @@ public class DebugWindow extends JFrame {
 
 		final JButton btnConnect = new JButton("Connect");
 
-		btnConnect.setBounds(10, 110, 87, 23);
+		btnConnect.setBounds(10, 172, 87, 23);
 		panel.add(btnConnect);
 
 		JLabel lblIp = new JLabel("IP");
@@ -83,10 +89,34 @@ public class DebugWindow extends JFrame {
 		lblPort.setBounds(10, 55, 46, 15);
 		panel.add(lblPort);
 
+		JLabel lblName = new JLabel("Name");
+		lblName.setBounds(10, 110, 46, 15);
+		panel.add(lblName);
+
+		EnterName = new JTextField();
+		EnterName.setColumns(10);
+		EnterName.setBounds(10, 135, 124, 21);
+		panel.add(EnterName);
+
+		List list = new List();
+		list.setBackground(Color.WHITE);
+		list.setMultipleSelections(false);
+		list.setBounds(651, 47, 143, 419);
+		panel.add(list);
+
+		JLabel lblUserOnline = new JLabel("User Online");
+		lblUserOnline.setForeground(Color.BLACK);
+		lblUserOnline.setFont(new Font("Bauhaus 93", Font.PLAIN, 25));
+		lblUserOnline.setBounds(651, 8, 143, 43);
+		panel.add(lblUserOnline);
+
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(158, 23, 477, 443);
+		panel.add(tabbedPane);
+
 		JScrollPane scrollPane = new JScrollPane();
+		tabbedPane.addTab("New tab", null, scrollPane, null);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(158, 24, 321, 278);
-		panel.add(scrollPane);
 
 		JTextPane textPane = new JTextPane();
 		scrollPane.setViewportView(textPane);
@@ -96,7 +126,7 @@ public class DebugWindow extends JFrame {
 
 		// }}
 
-		ClientObject = new Client(this);
+		ClientObject = new ChatSlaveClient(this);
 
 		// {{ Event
 		btnConnect.addActionListener(new ActionListener() {
@@ -104,7 +134,12 @@ public class DebugWindow extends JFrame {
 				ip = EnterIP.getText();
 				String port_str = EnterPort.getText();
 				port = new java.lang.Integer(port_str).intValue();
-				ClientObject.connectToServer(ip, port, name);
+				if (name != null) {
+					ClientObject.connectToServer(ip, port, name);
+					ClientObject.setName(name);
+				} else {
+					JOptionPane.showMessageDialog(null, "UserName can not be empty", "Error", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 
