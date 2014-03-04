@@ -6,6 +6,7 @@ import java.io.DataOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import javax.swing.JOptionPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
@@ -48,17 +49,33 @@ public class ChatSlaveClient implements Runnable {
 	private void Handle(String transferLine) {
 		// TODO Auto-generated method stub
 
-		if (transferLine.startsWith("/nameOcupied")) {
-			
-			
-		} else if (transferLine.startsWith("/Message")) {
+		if (transferLine.startsWith("/nameOccupied")) {
+			try {
+				socket.shutdownInput();
+				socket.shutdownOutput();
+				socket.close();
+				JOptionPane.showMessageDialog(null, "This name has been occupied", "Error", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception e) {
+			}
 
+		} else if (transferLine.startsWith("/BoradCastMessage")) {
+			String boradCastMessage = transferLine.split(" ", 3)[2];
+			String Sender = transferLine.split(" ", 3)[1];
+			SimpleAttributeSet recv = new SimpleAttributeSet();
+			StyleConstants.setForeground(recv, Color.RED);
+			GUIObject.addText(Sender + " : " + boradCastMessage, recv);
+		} else if (transferLine.startsWith("/newUser")) {
+			String newUser = transferLine.split(" ", 2)[1];
+			GUIObject.addUser(newUser);
+		} else if (transferLine.startsWith("/userLeave ")) {
+			String leave = transferLine.split(" ", 2)[1];
+			GUIObject.removeUser(leave);
 		}
 
-		System.out.println("Recv: " + transferLine);
-		SimpleAttributeSet recv = new SimpleAttributeSet();
-		StyleConstants.setForeground(recv, Color.RED);
-		GUIObject.addText("Recv: " + transferLine, recv);
+		// System.out.println("Recv: " + transferLine);
+		// SimpleAttributeSet recv = new SimpleAttributeSet();
+		// StyleConstants.setForeground(recv, Color.RED);
+		// GUIObject.addText("Recv: " + transferLine, recv);
 	}
 
 	public void connectToServer(String ip, int port2, String name) {
@@ -68,6 +85,7 @@ public class ChatSlaveClient implements Runnable {
 		username = name;
 
 		// create socket
+
 		try {
 			socket = new Socket(InetAddress.getByName(serverIP), port);
 

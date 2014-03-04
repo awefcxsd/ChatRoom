@@ -1,4 +1,4 @@
-package boradcastServer.Com;
+package ChatServer.Com;
 
 import java.awt.Color;
 import java.io.DataInputStream;
@@ -55,9 +55,22 @@ public class MasterClient implements Runnable {
 	}
 
 	private void Handle(String msg) {
-		
-		mainThread.boradCast(msg);
-
+		// TODO Auto-generated method stub
+		if (msg.startsWith("/name")) {
+			ClientName = msg.split(" ", 2)[1];
+			if (mainThread.UserNameList.contains(ClientName)) {
+				send("/nameOccupied");
+			} else {
+				for (String other : mainThread.UserNameList) {
+					send("/newUser " + other);
+				}
+				mainThread.UserNameList.add(ClientName);
+				mainThread.broadCast("/newUser " + ClientName);
+			}
+		} else if (msg.startsWith("/BoradCastMessage")) {
+			String boradCastMessage = msg.split(" ", 2)[1];
+			mainThread.broadCast("/BoradCastMessage " + ClientName + " " + boradCastMessage);
+		}
 
 	}
 
@@ -69,6 +82,11 @@ public class MasterClient implements Runnable {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
+	}
+
+	public String getName() {
+		// TODO Auto-generated method stub
+		return ClientName;
 	}
 
 }

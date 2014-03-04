@@ -1,4 +1,4 @@
-package boradcastServer.Com;
+package ChatServer.Com;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -31,7 +31,7 @@ public class Server {
 		}
 	}
 	
-	public void boradCast(String text){
+	public void broadCast(String text){
 		for(MasterClient c : clientList){
 			c.send(text);
 		}
@@ -40,8 +40,11 @@ public class Server {
 
 	public void remove(MasterClient client, int id2) {
 		// TODO Auto-generated method stub
+		String dead=client.getName();
+		UserNameList.remove(dead);
 		clientList.remove(client);
 		System.out.println("Client "+id2+" disconnect");
+		broadCast("/userLeave "+dead);
 	}
 	
 }

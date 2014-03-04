@@ -34,6 +34,7 @@ public class ChatClientWindow extends JFrame {
 	private JTextField EnterMessage;
 	private JTextField EnterIP;
 	private JTextField EnterPort;
+	private List userList;
 	private ChatSlaveClient ClientObject;
 	private StyledDocument doc;
 	public String ip;
@@ -94,15 +95,16 @@ public class ChatClientWindow extends JFrame {
 		panel.add(lblName);
 
 		EnterName = new JTextField();
+		EnterName.setText("");
 		EnterName.setColumns(10);
 		EnterName.setBounds(10, 135, 124, 21);
 		panel.add(EnterName);
 
-		List list = new List();
-		list.setBackground(Color.WHITE);
-		list.setMultipleSelections(false);
-		list.setBounds(651, 47, 143, 419);
-		panel.add(list);
+		userList = new List();
+		userList.setBackground(Color.WHITE);
+		userList.setMultipleSelections(false);
+		userList.setBounds(651, 47, 143, 419);
+		panel.add(userList);
 
 		JLabel lblUserOnline = new JLabel("User Online");
 		lblUserOnline.setForeground(Color.BLACK);
@@ -134,11 +136,12 @@ public class ChatClientWindow extends JFrame {
 				ip = EnterIP.getText();
 				String port_str = EnterPort.getText();
 				port = new java.lang.Integer(port_str).intValue();
-				if (name != null) {
+				name=EnterName.getText();
+				if (name.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "UserName can not be empty", "Error", JOptionPane.INFORMATION_MESSAGE);
+				} else {
 					ClientObject.connectToServer(ip, port, name);
 					ClientObject.setName(name);
-				} else {
-					JOptionPane.showMessageDialog(null, "UserName can not be empty", "Error", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -148,7 +151,7 @@ public class ChatClientWindow extends JFrame {
 				String sendText = EnterMessage.getText();
 				EnterMessage.setText("");
 				if (sendText != "") {
-					ClientObject.send(sendText);
+					ClientObject.send("/BoradCastMessage "+sendText);
 				}
 			}
 		});
@@ -157,7 +160,7 @@ public class ChatClientWindow extends JFrame {
 				String sendText = EnterMessage.getText();
 				EnterMessage.setText("");
 				if (sendText != "") {
-					ClientObject.send(sendText);
+					ClientObject.send("/BoradCastMessage "+sendText);
 				}
 			}
 		});
@@ -172,4 +175,13 @@ public class ChatClientWindow extends JFrame {
 
 		}
 	}
+	
+	public void addUser(String other) {
+		userList.add(other);
+	}
+	
+	public void removeUser(String other) {
+		userList.remove(other);
+	}
+	
 }
