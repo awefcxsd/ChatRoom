@@ -25,6 +25,9 @@ import java.awt.List;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTabbedPane;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
 
 public class ChatClientWindow extends JFrame {
 	/**
@@ -34,6 +37,7 @@ public class ChatClientWindow extends JFrame {
 	private JTextField EnterMessage;
 	private JTextField EnterIP;
 	private JTextField EnterPort;
+	JScrollPane scrollPane;
 	private List userList;
 	private ChatSlaveClient ClientObject;
 	private StyledDocument doc;
@@ -48,22 +52,12 @@ public class ChatClientWindow extends JFrame {
 		// {{ Layout set up
 		setResizable(false);
 		setTitle("Debug Client");
-		setSize(833, 626);
+		setSize(833, 521);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
 		panel.setLayout(null);
-
-		EnterMessage = new JTextField();
-
-		EnterMessage.setBounds(158, 488, 309, 21);
-		panel.add(EnterMessage);
-		EnterMessage.setColumns(10);
-
-		JButton btnSend = new JButton("Send");
-		btnSend.setBounds(158, 519, 87, 23);
-		panel.add(btnSend);
 
 		EnterIP = new JTextField();
 		EnterIP.setText("140.112.18.205");
@@ -116,17 +110,35 @@ public class ChatClientWindow extends JFrame {
 		tabbedPane.setBounds(158, 23, 477, 443);
 		panel.add(tabbedPane);
 
-		JScrollPane scrollPane = new JScrollPane();
-		tabbedPane.addTab("New tab", null, scrollPane, null);
+		JPanel panel_1 = new JPanel();
+		tabbedPane.addTab("Main", null, panel_1, null);
+		panel_1.setLayout(null);
+
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 472, 332);
+		panel_1.add(scrollPane);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		JTextPane textPane = new JTextPane();
 		scrollPane.setViewportView(textPane);
 		textPane.setEditable(false);
 
-		doc = textPane.getStyledDocument();
+		EnterMessage = new JTextField();
+		EnterMessage.setBounds(10, 350, 309, 21);
+		panel_1.add(EnterMessage);
+		EnterMessage.setColumns(10);
+
+		JButton btnSend = new JButton("Send");
+		btnSend.setBounds(10, 381, 87, 23);
+		panel_1.add(btnSend);
+
+		
+
+		
 
 		// }}
+		
+		doc = textPane.getStyledDocument();
 
 		ClientObject = new ChatSlaveClient(this);
 
@@ -136,7 +148,7 @@ public class ChatClientWindow extends JFrame {
 				ip = EnterIP.getText();
 				String port_str = EnterPort.getText();
 				port = new java.lang.Integer(port_str).intValue();
-				name=EnterName.getText();
+				name = EnterName.getText();
 				if (name.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "UserName can not be empty", "Error", JOptionPane.INFORMATION_MESSAGE);
 				} else {
@@ -145,13 +157,12 @@ public class ChatClientWindow extends JFrame {
 				}
 			}
 		});
-
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String sendText = EnterMessage.getText();
 				EnterMessage.setText("");
 				if (sendText != "") {
-					ClientObject.send("/BoradCastMessage "+sendText);
+					ClientObject.send("/BoradCastMessage " + sendText);
 				}
 			}
 		});
@@ -159,8 +170,8 @@ public class ChatClientWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String sendText = EnterMessage.getText();
 				EnterMessage.setText("");
-				if (sendText != "") {
-					ClientObject.send("/BoradCastMessage "+sendText);
+				if (!sendText.isEmpty()) {
+					ClientObject.send("/BoradCastMessage " + sendText);
 				}
 			}
 		});
@@ -171,15 +182,17 @@ public class ChatClientWindow extends JFrame {
 	public void addText(String add, SimpleAttributeSet texture) {
 		try {
 			doc.insertString(doc.getLength(), add + "\n", texture);
+			JScrollBar sBar = scrollPane.getVerticalScrollBar();
+			sBar.setValue(sBar.getMaximum());
 		} catch (Exception e) {
 
 		}
 	}
-	
+
 	public void addUser(String other) {
 		userList.add(other);
 	}
-	
+
 	public void removeUser(String other) {
 		userList.remove(other);
 	}
@@ -188,5 +201,5 @@ public class ChatClientWindow extends JFrame {
 		// TODO Auto-generated method stub
 		userList.removeAll();
 	}
-	
+
 }
