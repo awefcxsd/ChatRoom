@@ -51,6 +51,7 @@ public class DebugWindow extends JFrame {
 		panel.add(textPane);
 
 		EnterMessage = new JTextField();
+		
 		EnterMessage.setBounds(158, 318, 309, 21);
 		panel.add(EnterMessage);
 		EnterMessage.setColumns(10);
@@ -71,7 +72,7 @@ public class DebugWindow extends JFrame {
 		EnterPort.setBounds(10, 79, 124, 21);
 		panel.add(EnterPort);
 
-		JButton btnConnect = new JButton("Connect");
+		final JButton btnConnect = new JButton("Connect");
 
 		btnConnect.setBounds(10, 110, 87, 23);
 		panel.add(btnConnect);
@@ -101,6 +102,13 @@ public class DebugWindow extends JFrame {
 		});
 		
 		btnSend.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String sendText = EnterMessage.getText();
+				EnterMessage.setText("");
+				ClientObject.send(sendText);
+			}
+		});
+		EnterMessage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String sendText = EnterMessage.getText();
 				EnterMessage.setText("");
