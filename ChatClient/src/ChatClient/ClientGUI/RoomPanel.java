@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -27,6 +28,9 @@ public class RoomPanel extends JPanel{
 	public StyledDocument doc;
 	public ChatSlaveClient client;
 	public Vector<String> roomUsers;
+
+	private JLabel memberLabel;
+	
 	
 	public RoomPanel(ChatSlaveClient clientObject){
 		
@@ -58,6 +62,10 @@ public class RoomPanel extends JPanel{
 		btnSend = new JButton("Send");
 		btnSend.setBounds(10, 381, 87, 23);
 		this.add(btnSend);
+		
+		memberLabel = new JLabel("Members: ");
+		memberLabel.setBounds(120, 381, 200, 23);
+		this.add(memberLabel);
 		
 		doc = textPane.getStyledDocument();
 		
@@ -103,6 +111,12 @@ public class RoomPanel extends JPanel{
 	public void joinUser(String user){
 		
 		roomUsers.add(user);
+		String memberString = "Members: ";
+		for(String userString: roomUsers){
+			
+			memberString += (userString+" ");
+		}
+		memberLabel.setText(memberString);
 		
 	}
 }
