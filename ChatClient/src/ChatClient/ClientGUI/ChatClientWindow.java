@@ -52,6 +52,7 @@ public class ChatClientWindow extends JFrame {
 	public int port;
 	public String name;
 	private JTextField EnterName;
+	private JTabbedPane tabbedPane;
 
 	public ChatClientWindow() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,7 +66,7 @@ public class ChatClientWindow extends JFrame {
 		BackGroundPanel panel = new BackGroundPanel();
 		getContentPane().add(panel);
 		panel.setLayout(null);
-		
+
 		EnterIP = new JTextField();
 		EnterIP.setText("140.112.18.205");
 		EnterIP.setBounds(10, 36, 124, 21);
@@ -80,7 +81,7 @@ public class ChatClientWindow extends JFrame {
 
 		final JButton btnConnect = new JButton("Connect");
 
-		btnConnect.setBounds(10, 184, 87, 23);
+		btnConnect.setBounds(10, 184, 124, 23);
 		panel.add(btnConnect);
 
 		JLabel lblIp = new JLabel("IP");
@@ -104,10 +105,9 @@ public class ChatClientWindow extends JFrame {
 		EnterName.setBounds(10, 147, 124, 21);
 		panel.add(EnterName);
 
-
 		userList = new List();
 		userList.setMultipleSelections(false);
-		userList.setBounds(689, 59, 143, 419);
+		userList.setBounds(689, 59, 143, 354);
 		panel.add(userList);
 
 		JLabel lblUserOnline = new JLabel("User Online");
@@ -118,7 +118,7 @@ public class ChatClientWindow extends JFrame {
 		panel.add(lblUserOnline);
 
 		UIManager.put("TabbedPane.contentOpaque", false);
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+	    tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setBounds(171, 35, 477, 443);
 		panel.add(tabbedPane);
@@ -132,7 +132,8 @@ public class ChatClientWindow extends JFrame {
 		scrollPane.setBackground(new Color(255, 255, 255, 255));
 		scrollPane.setBounds(0, 0, 472, 332);
 		panel_1.add(scrollPane);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		JTextPane textPane = new JTextPane();
 		textPane.setBackground(new Color(255, 255, 255, 255));
@@ -148,6 +149,15 @@ public class ChatClientWindow extends JFrame {
 		btnSend.setBounds(10, 381, 87, 23);
 		panel_1.add(btnSend);
 
+		JButton btnChatroom = new JButton("New Chat Room");
+
+		btnChatroom.setBounds(10, 217, 124, 23);
+		panel.add(btnChatroom);
+
+		JButton btnAddMember = new JButton("Add Member");
+		btnAddMember.setBounds(699, 419, 124, 23);
+		panel.add(btnAddMember);
+
 		// }}
 
 		doc = textPane.getStyledDocument();
@@ -162,7 +172,9 @@ public class ChatClientWindow extends JFrame {
 				port = new java.lang.Integer(port_str).intValue();
 				name = EnterName.getText();
 				if (name.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "UserName can not be empty", "Error", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"UserName can not be empty", "Error",
+							JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					ClientObject.connectToServer(ip, port, name);
 					ClientObject.setName(name);
@@ -187,6 +199,43 @@ public class ChatClientWindow extends JFrame {
 				}
 			}
 		});
+		// Add by Sid
+		btnChatroom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String sendText = "/openNewRoom";
+				ClientObject.send(sendText);
+			}
+		});
+		// Add by Sid
+		btnAddMember.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+
+					int index = tabbedPane.getSelectedIndex();
+					if (index != 0) {
+						RoomPanel currentRoom = (RoomPanel) tabbedPane
+								.getTabComponentAt(index);
+						String userName = userList.getSelectedItem();
+						if (userName != null) {
+							String sendText = "/invite "
+									+ currentRoom.getName() + " " + userName;
+							ClientObject.send(sendText);
+						}
+						else {
+							System.out.println("User Name Not Selected");
+							
+						}
+					}
+					else {
+						System.out.println("Unable to Add Member on Main Tab!!");
+					}
+				} catch (Exception err) {
+					System.out.println(err.toString());
+
+				}
+			}
+		});
+
 		// }}
 
 	}
@@ -196,6 +245,27 @@ public class ChatClientWindow extends JFrame {
 			doc.insertString(doc.getLength(), add + "\n", texture);
 			JScrollBar sBar = scrollPane.getVerticalScrollBar();
 			sBar.setValue(sBar.getMaximum());
+		} catch (Exception e) {
+
+		}
+	}
+	
+	// Add by Sid
+	public void addRoomText(String roomNumber ,String add, SimpleAttributeSet texture) {
+		try {
+			StyledDocument roomDoc;
+			
+			for (RoomPanel room : ClientObject.roomList){
+				if(room.getName()==roomNumber){
+					roomDoc = room.getDoc();
+					roomDoc.insertString(roomDoc.getLength(), add + "\n", texture);
+					JScrollBar sBar = room.scrollPane.getVerticalScrollBar();
+					sBar.setValue(sBar.getMaximum());
+				    break;	
+				}
+			}
+			
+			
 		} catch (Exception e) {
 
 		}
@@ -213,10 +283,12 @@ public class ChatClientWindow extends JFrame {
 		// TODO Auto-generated method stub
 		userList.removeAll();
 	}
-
 	
+	// Add by Sid
+	public void addNewTab(RoomPanel newRoom){
+		
+		tabbedPane.addTab(newRoom.getName(), null, newRoom, null);
 	
-	
-	
-	
+		
+	}
 }

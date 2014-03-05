@@ -5,12 +5,14 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 import ChatClient.ClientGUI.ChatClientWindow;
+import ChatClient.ClientGUI.RoomPanel;
 
 public class ChatSlaveClient implements Runnable {
 
@@ -23,9 +25,12 @@ public class ChatSlaveClient implements Runnable {
 	private DataInputStream is;
 	private Thread thread;
 	private String username;
+	public Vector<RoomPanel> roomList;
+
 
 	public ChatSlaveClient(ChatClientWindow chatClientWindow) {
 		GUIObject = chatClientWindow;
+		roomList = new Vector<RoomPanel>();
 	}
 
 	@Override
@@ -64,6 +69,38 @@ public class ChatSlaveClient implements Runnable {
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
 			GUIObject.addText(Sender + " : " + boradCastMessage, recv);
+			
+			// Add by Sid
+		} else if (transferLine.startsWith("/openNewRoom")) {
+			RoomPanel newRoom = new RoomPanel(this);
+			String newName = transferLine.split(" ", 2)[1];
+			newRoom.setName(newName);
+			roomList.add(newRoom);
+			GUIObject.addNewTab(newRoom);
+			
+			// Add by Sid
+		} else if (transferLine.startsWith("/userJoin")) {
+			String roomNumber = transferLine.split(" ", 3)[1];
+			String userName = transferLine.split(" ", 3)[2];
+			for(RoomPanel room: roomList){
+				if (room.getName() == roomNumber){
+					room.joinUser(userName);
+					// need to update user name list
+					break;
+				}
+				
+			}
+			
+			// Add by Sid
+		} else if (transferLine.startsWith("/roomMsg")) {
+			String roomNumber = transferLine.split(" ", 4)[1];
+			String sender = transferLine.split(" ", 4)[2];
+			String message = transferLine.split(" ", 4)[3];
+			SimpleAttributeSet recv = new SimpleAttributeSet();
+			StyleConstants.setForeground(recv, Color.BLACK);
+			GUIObject.addRoomText(roomNumber, sender + " : " + message, recv);
+			
+		
 		} else if (transferLine.startsWith("/newUser")) {
 			String newUser = transferLine.split(" ", 2)[1];
 			GUIObject.addUser(newUser);
