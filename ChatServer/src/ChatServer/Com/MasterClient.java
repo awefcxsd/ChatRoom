@@ -109,6 +109,13 @@ public class MasterClient implements Runnable {
 			
 			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
 			thisRoom.sendRoomMsg("/roomMsg " + RoomNumber + " " + this.ClientName + " " + Message);
+		} else if (msg.startsWith("/leaveRoom")){
+			String RoomNumber = msg.split(" ",2)[1];
+			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
+			
+			thisRoom.removeClient(this);
+			thisRoom.sendRoomMsg("/leaveRoom " + RoomNumber + " " + this.ClientName);
+			send("/closeRoom " + RoomNumber);
 		}
 			
 	}
