@@ -57,8 +57,8 @@ public class ChatClientWindow extends JFrame {
 
 	public ChatClientWindow() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		thisFrame=this;
-		
+		thisFrame = this;
+
 		// {{ Layout set up
 		setResizable(false);
 		setTitle("ChatClient");
@@ -120,7 +120,7 @@ public class ChatClientWindow extends JFrame {
 		panel.add(lblUserOnline);
 
 		UIManager.put("TabbedPane.contentOpaque", false);
-	    tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setBounds(171, 35, 477, 443);
 		panel.add(tabbedPane);
@@ -159,7 +159,7 @@ public class ChatClientWindow extends JFrame {
 		JButton btnAddMember = new JButton("Add Member");
 		btnAddMember.setBounds(699, 419, 124, 23);
 		panel.add(btnAddMember);
-		
+
 		JButton btnSecret = new JButton("Secret Message");
 		btnSecret.setBounds(699, 452, 124, 23);
 		panel.add(btnSecret);
@@ -191,7 +191,7 @@ public class ChatClientWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String sendText = EnterMessage.getText();
 				EnterMessage.setText("");
-				if (sendText != "") {
+				if (!sendText.isEmpty()) {
 					ClientObject.send("/BoradCastMessage " + sendText);
 				}
 			}
@@ -217,24 +217,21 @@ public class ChatClientWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 
-					int index = tabbedPane.getSelectedIndex();
-					if (index != 0) {
-						RoomPanel currentRoom = (RoomPanel) tabbedPane
-								.getTabComponentAt(index);
-						String userName = userList.getSelectedItem();
-						if (userName != null) {
-							String sendText = "/invite "
-									+ currentRoom.getName() + " " + userName;
-							ClientObject.send(sendText);
-						}
-						else {
-							System.out.println("User Name Not Selected");
-							
-						}
+					RoomPanel currentRoom = (RoomPanel) tabbedPane
+							.getSelectedComponent();
+					System.out.println("Room name " + currentRoom.getName());
+
+					String userName = userList.getSelectedItem();
+					System.out.println("Add memeber " + userName);
+					if (userName != null && !userName.equals(ClientObject.getName())) {
+						String sendText = "/invite " + currentRoom.getName()
+								+ " " + userName;
+						ClientObject.send(sendText);
+					} else {
+						System.out.println("User Name Not Selected Or Attempt to Add Oneself ");
+
 					}
-					else {
-						System.out.println("Unable to Add Member on Main Tab!!");
-					}
+
 				} catch (Exception err) {
 					System.out.println(err.toString());
 
@@ -246,16 +243,15 @@ public class ChatClientWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String userName = userList.getSelectedItem();
 				if (userName != null) {
-					SecretMsg s = new SecretMsg(userName,ClientObject);
+					SecretMsg s = new SecretMsg(userName, ClientObject);
 					s.setLocationRelativeTo(thisFrame);
 					s.setVisible(true);
-				}
-				else {
+				} else {
 					JOptionPane.showMessageDialog(thisFrame,
 							"User Name Not Selected", "Error",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
-				
+
 			}
 		});
 		// }}
@@ -271,23 +267,24 @@ public class ChatClientWindow extends JFrame {
 
 		}
 	}
-	
+
 	// Add by Sid
-	public void addRoomText(String roomNumber ,String add, SimpleAttributeSet texture) {
+	public void addRoomText(String roomNumber, String add,
+			SimpleAttributeSet texture) {
 		try {
 			StyledDocument roomDoc;
-			
-			for (RoomPanel room : ClientObject.roomList){
-				if(room.getName()==roomNumber){
+
+			for (RoomPanel room : ClientObject.roomList) {
+				if (room.getName().equals(roomNumber)) {
 					roomDoc = room.getDoc();
-					roomDoc.insertString(roomDoc.getLength(), add + "\n", texture);
+					roomDoc.insertString(roomDoc.getLength(), add + "\n",
+							texture);
 					JScrollBar sBar = room.scrollPane.getVerticalScrollBar();
 					sBar.setValue(sBar.getMaximum());
-				    break;	
+					break;
 				}
 			}
-			
-			
+
 		} catch (Exception e) {
 
 		}
@@ -305,12 +302,11 @@ public class ChatClientWindow extends JFrame {
 		// TODO Auto-generated method stub
 		userList.removeAll();
 	}
-	
+
 	// Add by Sid
-	public void addNewTab(RoomPanel newRoom){
-		
+	public void addNewTab(RoomPanel newRoom) {
+
 		tabbedPane.addTab(newRoom.getName(), null, newRoom, null);
-	
-		
+
 	}
 }
