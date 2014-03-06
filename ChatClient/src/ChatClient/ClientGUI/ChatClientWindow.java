@@ -52,7 +52,7 @@ public class ChatClientWindow extends JFrame {
 	public int port;
 	public String name;
 	private JTextField EnterName;
-	private JTabbedPane tabbedPane;
+	public JTabbedPane tabbedPane;
 	private JFrame thisFrame;
 
 	public ChatClientWindow() {
@@ -121,6 +121,7 @@ public class ChatClientWindow extends JFrame {
 
 		UIManager.put("TabbedPane.contentOpaque", false);
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setBounds(171, 35, 477, 443);
 		panel.add(tabbedPane);
@@ -224,11 +225,25 @@ public class ChatClientWindow extends JFrame {
 					String userName = userList.getSelectedItem();
 					System.out.println("Add memeber " + userName);
 					if (userName != null && !userName.equals(ClientObject.getName())) {
+						
+						boolean alreadyChoose = false;
+						
+						for(String name : currentRoom.roomUsers){
+							if (name.equals(userName)){
+								alreadyChoose = true;
+								break;
+							}
+						}
+						if(alreadyChoose){
+					    System.out.println("Member Already Added");
+						}
+						else{
 						String sendText = "/invite " + currentRoom.getName()
 								+ " " + userName;
 						ClientObject.send(sendText);
+						}
 					} else {
-						System.out.println("User Name Not Selected Or Attempt to Add Oneself ");
+						System.out.println("User Name Not Selected, Attempt to Add Oneself");
 
 					}
 
