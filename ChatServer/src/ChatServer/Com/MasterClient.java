@@ -17,6 +17,7 @@ public class MasterClient implements Runnable {
 	private DataInputStream is;
 	private DataOutputStream os;
 	private String ClientName;
+	private boolean overLeap=false;
 
 	public MasterClient(Server server, Socket s, int i) {
 		// TODO Auto-generated constructor stub
@@ -45,9 +46,9 @@ public class MasterClient implements Runnable {
 			}
 		} catch (IOException e) {
 			if (e instanceof SocketException) {
-				mainThread.remove(this, id);
+				mainThread.remove(this, id, overLeap);
 			} else {
-				mainThread.remove(this, id);
+				mainThread.remove(this, id, overLeap);
 				// System.out.println(e.toString());
 				// e.printStackTrace();
 			}
@@ -59,6 +60,7 @@ public class MasterClient implements Runnable {
 		if (msg.startsWith("/name")) {
 			ClientName = msg.split(" ", 2)[1];
 			if (mainThread.UserNameList.contains(ClientName)) {
+				overLeap=true;
 				send("/nameOccupied");
 			} else {
 				for (String other : mainThread.UserNameList) {

@@ -21,50 +21,52 @@ public class Server {
 			while (true) {
 				synchronized (this) {
 					Socket s = serverSock.accept();
-					System.out.println("Client "+id+" connect");
+					System.out.println("Client " + id + " connect");
 					clientList.add(new MasterClient(this, s, id++));
 				}
 				Thread thd = new Thread(clientList.lastElement());
 				thd.start();
-				
+
 			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			e.printStackTrace();
 		}
 	}
-	
-	public void broadCast(String text){
-		for(MasterClient c : clientList){
+
+	public void broadCast(String text) {
+		for (MasterClient c : clientList) {
 			c.send(text);
 		}
-		System.out.println("Boradcast "+ text);
+		System.out.println("Boradcast " + text);
 	}
 
-	public void remove(MasterClient client, int id2) {
+	public void remove(MasterClient client, int id2, boolean overLeap) {
 		// TODO Auto-generated method stub
-		String dead=client.getName();
-		UserNameList.remove(dead);
+		String dead = client.getName();
 		clientList.remove(client);
-		System.out.println("Client "+id2+" disconnect");
-		broadCast("/userLeave "+dead);
+		System.out.println("Client " + id2 + " disconnect");
+		if (!overLeap) {
+			broadCast("/userLeave " + dead);
+			UserNameList.remove(dead);
+		}
 	}
-	
-	public MasterClient search(String userName){
-		for(MasterClient c : clientList){
-			if(c.getName().equals(userName)){
+
+	public MasterClient search(String userName) {
+		for (MasterClient c : clientList) {
+			if (c.getName().equals(userName)) {
 				return c;
 			}
 		}
 		return null;
 	}
-	
-	public int getNewRoomId(){
-		
+
+	public int getNewRoomId() {
+
 		roomCount++;
-		
-		return roomCount-1;
-		
+
+		return roomCount - 1;
+
 	}
-	
+
 }
