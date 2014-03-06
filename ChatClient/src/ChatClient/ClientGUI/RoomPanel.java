@@ -29,7 +29,7 @@ public class RoomPanel extends JPanel{
 	public ChatSlaveClient client;
 	public Vector<String> roomUsers;
 
-	private JLabel memberLabel;
+	private JTextField memberLabel;
 	
 	
 	public RoomPanel(ChatSlaveClient clientObject){
@@ -45,7 +45,7 @@ public class RoomPanel extends JPanel{
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBackground(new Color(255, 255, 255, 255));
-		scrollPane.setBounds(0, 0, 472, 332);
+		scrollPane.setBounds(0, 25, 472, 307);
 		this.add(scrollPane);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -63,11 +63,12 @@ public class RoomPanel extends JPanel{
 		btnSend.setBounds(10, 381, 87, 23);
 		this.add(btnSend);
 		
-		/*
-		memberLabel = new JLabel("Members: ");
-		memberLabel.setBounds(120, 381, 200, 23);
+		
+		memberLabel = new JTextField("Members: ");
+		memberLabel.setBounds(0, 0, 472, 23);
+		memberLabel.setEditable(false);
 		this.add(memberLabel);
-		*/
+		
 		
 		doc = textPane.getStyledDocument();
 		
@@ -116,10 +117,10 @@ public class RoomPanel extends JPanel{
 		String memberString = "Members: ";
 		for(String userString: roomUsers){
 			
-			memberString += (userString+" ");
+			memberString += (userString+"  ");
 		}
 		
-		//memberLabel.setText(memberString);
+		memberLabel.setText(memberString);
 		
 	}
 }
