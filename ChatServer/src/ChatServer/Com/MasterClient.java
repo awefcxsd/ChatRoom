@@ -88,6 +88,20 @@ public class MasterClient implements Runnable {
 			send("/openNewRoom "+ "Room#"+ roomid);
 			send("/userJoin "+ "Room#"+ roomid +" "+ this.ClientName);
 			
+		} else if (msg.startsWith("/invite")) {
+			String RoomNumber = msg.split(" ",3)[1];
+			String UserName = msg.split(" ",3)[2];
+			MasterClient InvitedClient = mainThread.search(UserName);
+			
+			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
+			thisRoom.sendRoomMsg("/userJoin " + RoomNumber + " " + UserName);
+			
+			thisRoom.addClient(InvitedClient);
+			InvitedClient.send("/openNewRoom "+ RoomNumber);
+			for (MasterClient c : thisRoom.clientInRoom){
+				InvitedClient.send("/userJoin " + RoomNumber + " " + c.ClientName);
+			}
+			
 		}
 
 	}

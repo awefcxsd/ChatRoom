@@ -39,5 +39,12 @@ public class ServerRoom {
 		return roomId;
 		
 	}
+	
+	public void sendRoomMsg(String sendMsg) {
+		for (MasterClient c : clientInRoom){
+			c.send(sendMsg);
+		}
+		
+	}
 
 }

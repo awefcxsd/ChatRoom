@@ -60,6 +60,15 @@ public class Server {
 		}
 		return null;
 	}
+	
+	public ServerRoom searchRoom(String newRoomId){
+		for(ServerRoom r : roomList){
+			if(r.getId().equals(newRoomId)){
+				return r;
+			}
+		}
+		return null;
+	}
 
 	public int getNewRoomId() {
 
@@ -68,5 +77,7 @@ public class Server {
 		return roomCount - 1;
 
 	}
+	
+	
 
 }
