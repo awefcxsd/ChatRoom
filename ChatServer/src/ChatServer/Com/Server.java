@@ -47,4 +47,13 @@ public class Server {
 		broadCast("/userLeave "+dead);
 	}
 	
+	public MasterClient search(String userName){
+		for(MasterClient c : clientList){
+			if(c.getName().equals(userName)){
+				return c;
+			}
+		}
+		return null;
+	}
+	
 }

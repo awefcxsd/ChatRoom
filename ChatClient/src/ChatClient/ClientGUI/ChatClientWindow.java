@@ -53,10 +53,12 @@ public class ChatClientWindow extends JFrame {
 	public String name;
 	private JTextField EnterName;
 	private JTabbedPane tabbedPane;
+	private JFrame thisFrame;
 
 	public ChatClientWindow() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
+		thisFrame=this;
+		
 		// {{ Layout set up
 		setResizable(false);
 		setTitle("ChatClient");
@@ -157,6 +159,10 @@ public class ChatClientWindow extends JFrame {
 		JButton btnAddMember = new JButton("Add Member");
 		btnAddMember.setBounds(699, 419, 124, 23);
 		panel.add(btnAddMember);
+		
+		JButton btnSecret = new JButton("Secret Message");
+		btnSecret.setBounds(699, 452, 124, 23);
+		panel.add(btnSecret);
 
 		// }}
 
@@ -172,7 +178,7 @@ public class ChatClientWindow extends JFrame {
 				port = new java.lang.Integer(port_str).intValue();
 				name = EnterName.getText();
 				if (name.isEmpty()) {
-					JOptionPane.showMessageDialog(null,
+					JOptionPane.showMessageDialog(thisFrame,
 							"UserName can not be empty", "Error",
 							JOptionPane.INFORMATION_MESSAGE);
 				} else {
@@ -235,7 +241,23 @@ public class ChatClientWindow extends JFrame {
 				}
 			}
 		});
-
+		// Add by Michael
+		btnSecret.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String userName = userList.getSelectedItem();
+				if (userName != null) {
+					SecretMsg s = new SecretMsg(userName,ClientObject);
+					s.setLocationRelativeTo(thisFrame);
+					s.setVisible(true);
+				}
+				else {
+					JOptionPane.showMessageDialog(thisFrame,
+							"User Name Not Selected", "Error",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+				
+			}
+		});
 		// }}
 
 	}

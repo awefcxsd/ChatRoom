@@ -100,8 +100,14 @@ public class ChatSlaveClient implements Runnable {
 			StyleConstants.setForeground(recv, Color.BLACK);
 			GUIObject.addRoomText(roomNumber, sender + " : " + message, recv);
 			
-		
-		} else if (transferLine.startsWith("/newUser")) {
+			// Add by Michael
+		} else if (transferLine.startsWith("/SecretMsg ")) {
+			String sender = transferLine.split(" ", 3)[1];
+			String msg = transferLine.split(" ", 3)[2];
+			JOptionPane.showMessageDialog(GUIObject,
+					msg, "Secret Message from "+sender,
+					JOptionPane.INFORMATION_MESSAGE);
+		}else if (transferLine.startsWith("/newUser")) {
 			String newUser = transferLine.split(" ", 2)[1];
 			GUIObject.addUser(newUser);
 		} else if (transferLine.startsWith("/userLeave ")) {
