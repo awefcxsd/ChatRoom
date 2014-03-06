@@ -22,6 +22,7 @@ public class SecretMsg extends JDialog{
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	public SecretMsg(String user, ChatSlaveClient c){
+		setResizable(false);
 		
 		userName=user;
 		ClientObject=c;

@@ -164,6 +164,10 @@ public class ChatClientWindow extends JFrame {
 		JButton btnSecret = new JButton("Secret Message");
 		btnSecret.setBounds(699, 452, 124, 23);
 		panel.add(btnSecret);
+		
+		JButton btnSendFile = new JButton("Send File");
+		btnSendFile.setBounds(699, 485, 124, 23);
+		panel.add(btnSendFile);
 
 		// }}
 
