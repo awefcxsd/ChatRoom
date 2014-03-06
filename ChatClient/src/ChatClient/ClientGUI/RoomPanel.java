@@ -63,9 +63,11 @@ public class RoomPanel extends JPanel{
 		btnSend.setBounds(10, 381, 87, 23);
 		this.add(btnSend);
 		
+		/*
 		memberLabel = new JLabel("Members: ");
 		memberLabel.setBounds(120, 381, 200, 23);
 		this.add(memberLabel);
+		*/
 		
 		doc = textPane.getStyledDocument();
 		
@@ -116,10 +118,8 @@ public class RoomPanel extends JPanel{
 			
 			memberString += (userString+" ");
 		}
-		memberLabel = new JLabel(memberString);
-		memberLabel.setBounds(120, 381, 200, 23);
 		
-	
+		//memberLabel.setText(memberString);
 		
 	}
 }
