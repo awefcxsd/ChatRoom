@@ -27,7 +27,6 @@ public class ChatSlaveClient implements Runnable {
 	private String username;
 	public Vector<RoomPanel> roomList;
 
-
 	public ChatSlaveClient(ChatClientWindow chatClientWindow) {
 		GUIObject = chatClientWindow;
 		roomList = new Vector<RoomPanel>();
@@ -59,7 +58,9 @@ public class ChatSlaveClient implements Runnable {
 				socket.shutdownInput();
 				socket.shutdownOutput();
 				socket.close();
-				JOptionPane.showMessageDialog(null, "This name has been occupied", "Error", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null,
+						"This name has been occupied", "Error",
+						JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
 			}
 
@@ -69,7 +70,7 @@ public class ChatSlaveClient implements Runnable {
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
 			GUIObject.addText(Sender + " : " + boradCastMessage, recv);
-			
+
 			// Add by Sid
 		} else if (transferLine.startsWith("/openNewRoom")) {
 			RoomPanel newRoom = new RoomPanel(this);
@@ -77,21 +78,22 @@ public class ChatSlaveClient implements Runnable {
 			newRoom.setName(newName);
 			roomList.add(newRoom);
 			GUIObject.addNewTab(newRoom);
-			
+
 			// Add by Sid
 		} else if (transferLine.startsWith("/userJoin")) {
 			String roomNumber = transferLine.split(" ", 3)[1];
 			String userName = transferLine.split(" ", 3)[2];
-			for(RoomPanel room: roomList){
-				if (room.getName().equals(roomNumber)){
+			for (RoomPanel room : roomList) {
+				if (room.getName().equals(roomNumber)) {
 					room.joinUser(userName);
-					System.out.println("User "+ userName+ " join "+ roomNumber);
+					System.out.println("User " + userName + " join "
+							+ roomNumber);
 					// need to update user name list
 					break;
 				}
-				
+
 			}
-			
+
 			// Add by Sid
 		} else if (transferLine.startsWith("/roomMsg")) {
 			String roomNumber = transferLine.split(" ", 4)[1];
@@ -100,16 +102,44 @@ public class ChatSlaveClient implements Runnable {
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
 			GUIObject.addRoomText(roomNumber, sender + " : " + message, recv);
+
+			// Add by Sid
+		} else if (transferLine.startsWith("/leaveRoom")) {
+			String roomNumber = transferLine.split(" ", 3)[1];
+			String removeUser = transferLine.split(" ", 3)[2];
+			// RoomNumber UserName
+
+			for (RoomPanel room : roomList) {
+
+				if (room.getName().equals(roomNumber)) {
+					room.removeUser(removeUser);
+					break;
+				}
+			}
+
+			// Add by Sid
+		} else if (transferLine.startsWith("/closeRoom")) {
+			String roomNumber = transferLine.split(" ", 2)[1];
+			RoomPanel removeRoom = null;
+			// RoomNumber
+			for(RoomPanel room : roomList){
+				if(room.getName().equals(roomNumber)){
+					removeRoom = room;
+					GUIObject.removeRoom(removeRoom);
+			    break;
+				}
+
+			}
 			
-			
-			// Add by Michael
+			roomList.remove(removeRoom);
+
 		} else if (transferLine.startsWith("/SecretMsg ")) {
 			String sender = transferLine.split(" ", 3)[1];
 			String msg = transferLine.split(" ", 3)[2];
-			JOptionPane.showMessageDialog(GUIObject,
-					msg, "Secret Message from "+sender,
+			JOptionPane.showMessageDialog(GUIObject, msg,
+					"Secret Message from " + sender,
 					JOptionPane.INFORMATION_MESSAGE);
-		}else if (transferLine.startsWith("/newUser")) {
+		} else if (transferLine.startsWith("/newUser")) {
 			String newUser = transferLine.split(" ", 2)[1];
 			GUIObject.addUser(newUser);
 		} else if (transferLine.startsWith("/userLeave ")) {
@@ -166,9 +196,9 @@ public class ChatSlaveClient implements Runnable {
 		// TODO Auto-generated method stub
 		send("/name " + name);
 	}
-	
-	public String getName(){
-		
+
+	public String getName() {
+
 		return username;
 	}
 

@@ -164,7 +164,7 @@ public class ChatClientWindow extends JFrame {
 		JButton btnSecret = new JButton("Secret Message");
 		btnSecret.setBounds(699, 452, 124, 23);
 		panel.add(btnSecret);
-		
+
 		JButton btnSendFile = new JButton("Send File");
 		btnSendFile.setBounds(699, 485, 124, 23);
 		panel.add(btnSendFile);
@@ -228,26 +228,27 @@ public class ChatClientWindow extends JFrame {
 
 					String userName = userList.getSelectedItem();
 					System.out.println("Add memeber " + userName);
-					if (userName != null && !userName.equals(ClientObject.getName())) {
-						
+					if (userName != null
+							&& !userName.equals(ClientObject.getName())) {
+
 						boolean alreadyChoose = false;
-						
-						for(String name : currentRoom.roomUsers){
-							if (name.equals(userName)){
+
+						for (String name : currentRoom.roomUsers) {
+							if (name.equals(userName)) {
 								alreadyChoose = true;
 								break;
 							}
 						}
-						if(alreadyChoose){
-					    System.out.println("Member Already Added");
-						}
-						else{
-						String sendText = "/invite " + currentRoom.getName()
-								+ " " + userName;
-						ClientObject.send(sendText);
+						if (alreadyChoose) {
+							System.out.println("Member Already Added");
+						} else {
+							String sendText = "/invite "
+									+ currentRoom.getName() + " " + userName;
+							ClientObject.send(sendText);
 						}
 					} else {
-						System.out.println("User Name Not Selected, Attempt to Add Oneself");
+						System.out
+								.println("User Name Not Selected, Attempt to Add Oneself");
 
 					}
 
@@ -343,4 +344,12 @@ public class ChatClientWindow extends JFrame {
 		tabbedPane.addTab(newRoom.getName(), null, newRoom, null);
 
 	}
+
+	public void removeRoom(RoomPanel removeRoom) {
+
+		System.out.println("reomve" + removeRoom.getName());
+		tabbedPane.remove(removeRoom);
+
+	}
+
 }
