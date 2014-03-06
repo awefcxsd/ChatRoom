@@ -273,6 +273,21 @@ public class ChatClientWindow extends JFrame {
 
 			}
 		});
+		// Add by Michael
+		btnSendFile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String userName = userList.getSelectedItem();
+				if (userName != null) {
+					SendFile s = new SendFile(userName, ClientObject);
+					s.setLocationRelativeTo(thisFrame);
+					s.setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(thisFrame,
+							"User Name Not Selected", "Error",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		// }}
 
 	}
