@@ -138,7 +138,6 @@ public class ChatSlaveClient implements Runnable {
 
 		try {
 			socket = new Socket(InetAddress.getByName(serverIP), port);
-			socket.setSoTimeout(1000);
 			os = new DataOutputStream(socket.getOutputStream());
 			is = new DataInputStream(socket.getInputStream());
 			// this.os = new DataOutputStream(os);

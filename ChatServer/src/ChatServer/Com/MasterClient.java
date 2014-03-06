@@ -77,6 +77,7 @@ public class MasterClient implements Runnable {
 			String SecretMessage = msg.split(" ", 3)[2];
 			mainThread.search(recieve).send("/SecretMsg "+ClientName+" " + SecretMessage);
 		} else if (msg.startsWith("/openNewRoom")) {
+			System.out.println("newRoom");
 			//maintain room list in server and add creator into the room
 			int roomid =(mainThread.getNewRoomId()+1);
 			ServerRoom room = new ServerRoom("Room#"+ roomid );
