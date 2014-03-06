@@ -116,7 +116,10 @@ public class RoomPanel extends JPanel{
 			
 			memberString += (userString+" ");
 		}
-		memberLabel.setText(memberString);
+		memberLabel = new JLabel(memberString);
+		memberLabel.setBounds(120, 381, 200, 23);
+		
+	
 		
 	}
 }
