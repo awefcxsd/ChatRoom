@@ -73,7 +73,7 @@ public class RoomPanel extends JPanel{
 			public void actionPerformed(ActionEvent arg0) {
 				String sendText = EnterMessage.getText();
 				EnterMessage.setText("");
-				if (sendText != "") {
+				if (!sendText.isEmpty()) {
 					client.send("/roomMsg "+ roomName +" "+ sendText);
 				}
 			}

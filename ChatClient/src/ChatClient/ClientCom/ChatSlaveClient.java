@@ -83,8 +83,9 @@ public class ChatSlaveClient implements Runnable {
 			String roomNumber = transferLine.split(" ", 3)[1];
 			String userName = transferLine.split(" ", 3)[2];
 			for(RoomPanel room: roomList){
-				if (room.getName() == roomNumber){
+				if (room.getName().equals(roomNumber)){
 					room.joinUser(userName);
+					System.out.println("User "+ userName+ " join "+ roomNumber);
 					// need to update user name list
 					break;
 				}
@@ -164,6 +165,11 @@ public class ChatSlaveClient implements Runnable {
 	public void setName(String name) {
 		// TODO Auto-generated method stub
 		send("/name " + name);
+	}
+	
+	public String getName(){
+		
+		return username;
 	}
 
 }
