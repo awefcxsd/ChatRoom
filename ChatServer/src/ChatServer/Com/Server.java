@@ -7,10 +7,13 @@ import java.util.Vector;
 public class Server {
 	Vector<MasterClient> clientList;
 	Vector<String> UserNameList;
+	Vector<ServerRoom> roomList;
 	private ServerSocket serverSock;
 	private int id = 0;
+	private int roomCount = 0;
 
 	public Server() {
+		roomList = new Vector<ServerRoom>();
 		clientList = new Vector<MasterClient>();
 		UserNameList = new Vector<String>();
 		try {
@@ -54,6 +57,14 @@ public class Server {
 			}
 		}
 		return null;
+	}
+	
+	public int getNewRoomId(){
+		
+		roomCount++;
+		
+		return roomCount-1;
+		
 	}
 	
 }

@@ -74,6 +74,18 @@ public class MasterClient implements Runnable {
 			String recieve = msg.split(" ", 3)[1];
 			String SecretMessage = msg.split(" ", 3)[2];
 			mainThread.search(recieve).send("/SecretMsg "+ClientName+" " + SecretMessage);
+		} else if (msg.startsWith("/openNewRoom")) {
+			//maintain room list in server and add creator into the room
+			int roomid =(mainThread.getNewRoomId()+1);
+			ServerRoom room = new ServerRoom("Room#"+ roomid );
+			mainThread.roomList.add(room);
+			room.addClient(this);
+			
+			//Assign a room number and send¡§Open new room¡¨and ¡§User join¡¨to client that ask for new room.
+			
+			send("/openNewRoom "+ "Room#"+ roomid);
+			send("/userJoin "+ "Room#"+ roomid +" "+ this.ClientName);
+			
 		}
 
 	}
