@@ -72,10 +72,15 @@ public class MasterClient implements Runnable {
 		} else if (msg.startsWith("/BoradCastMessage")) {
 			String boradCastMessage = msg.split(" ", 2)[1];
 			mainThread.broadCast("/BoradCastMessage " + ClientName + " " + boradCastMessage);
+			
+		} else if (msg.startsWith("/BoradCastIcon")) {
+			mainThread.broadCast("/BoradCastIcon " + ClientName);
+			
 		} else if (msg.startsWith("/SecretMsg")) {
 			String recieve = msg.split(" ", 3)[1];
 			String SecretMessage = msg.split(" ", 3)[2];
 			mainThread.search(recieve).send("/SecretMsg "+ClientName+" " + SecretMessage);
+			
 		} else if (msg.startsWith("/openNewRoom")) {
 			System.out.println("newRoom");
 			//maintain room list in server and add creator into the room
@@ -109,6 +114,13 @@ public class MasterClient implements Runnable {
 			
 			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
 			thisRoom.sendRoomMsg("/roomMsg " + RoomNumber + " " + this.ClientName + " " + Message);
+			
+		} else if (msg.startsWith("/roomIcon")){
+			String RoomNumber = msg.split(" ",2)[1];
+			
+			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
+			thisRoom.sendRoomMsg("/roomIcon " + RoomNumber + " " + this.ClientName);
+			
 		} else if (msg.startsWith("/leaveRoom")){
 			String RoomNumber = msg.split(" ",2)[1];
 			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
