@@ -70,6 +70,12 @@ public class ChatSlaveClient implements Runnable {
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
 			GUIObject.addText(Sender + " : " + boradCastMessage, recv);
+			
+		} else if (transferLine.startsWith("/BoradCastIcon")) {
+			String Sender = transferLine.split(" ", 2)[1];
+			SimpleAttributeSet recv = new SimpleAttributeSet();
+			StyleConstants.setForeground(recv, Color.BLACK);
+			GUIObject.addIcon(Sender + " : " , recv);
 
 			// Add by Sid
 		} else if (transferLine.startsWith("/openNewRoom")) {
@@ -102,7 +108,15 @@ public class ChatSlaveClient implements Runnable {
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
 			GUIObject.addRoomText(roomNumber, sender + " : " + message, recv);
-
+			
+			// Add by Fred
+		} else if (transferLine.startsWith("/roomIcon")) {
+			String roomNumber = transferLine.split(" ", 3)[1];
+			String sender = transferLine.split(" ", 3)[2];
+			SimpleAttributeSet recv = new SimpleAttributeSet();
+			StyleConstants.setForeground(recv, Color.BLACK);
+			GUIObject.addRoomIcon(roomNumber, sender + " : ", recv);
+			
 			// Add by Sid
 		} else if (transferLine.startsWith("/leaveRoom")) {
 			String roomNumber = transferLine.split(" ", 3)[1];

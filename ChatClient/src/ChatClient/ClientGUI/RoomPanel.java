@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ public class RoomPanel extends JPanel {
 	public JTextPane textPane;
 	public JTextField EnterMessage;
 	public JButton btnSend;
+	public JButton btnEicon;
 	public String roomName;
 	public StyledDocument doc;
 	public ChatSlaveClient client;
@@ -66,6 +68,11 @@ public class RoomPanel extends JPanel {
 		btnLeave.setBounds(120, 381, 87, 23);
 		this.add(btnLeave);
 
+		btnEicon = new JButton();
+		btnEicon.setIcon(new ImageIcon(RoomPanel.class.getResource("/ChatClient/eiconProfile.gif")));
+		btnEicon.setBounds(370, 343, 60, 60);
+		this.add(btnEicon);
+		
 		memberLabel = new JTextField("Members: ");
 		memberLabel.setBounds(0, 0, 472, 23);
 		memberLabel.setEditable(false);
@@ -94,6 +101,11 @@ public class RoomPanel extends JPanel {
 		btnLeave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				client.send("/leaveRoom " + roomName);
+			}
+		});
+		btnEicon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				client.send("/roomIcon " + roomName);
 			}
 		});
 

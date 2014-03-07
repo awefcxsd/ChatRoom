@@ -35,6 +35,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
+import javax.swing.SwingConstants;
 
 public class ChatClientWindow extends JFrame {
 	/**
@@ -54,6 +55,7 @@ public class ChatClientWindow extends JFrame {
 	private JTextField EnterName;
 	public JTabbedPane tabbedPane;
 	private JFrame thisFrame;
+	public JTextPane textPane;
 
 	public ChatClientWindow() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -138,7 +140,7 @@ public class ChatClientWindow extends JFrame {
 		scrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
 		textPane.setBackground(new Color(255, 255, 255, 255));
 		scrollPane.setViewportView(textPane);
 		textPane.setEditable(false);
@@ -151,6 +153,11 @@ public class ChatClientWindow extends JFrame {
 		JButton btnSend = new JButton("Send");
 		btnSend.setBounds(10, 381, 87, 23);
 		panel_1.add(btnSend);
+		
+		JButton btnEicon = new JButton("");
+		btnEicon.setIcon(new ImageIcon(ChatClientWindow.class.getResource("/ChatClient/eiconProfile.gif")));
+		btnEicon.setBounds(370, 343, 60, 60);
+		panel_1.add(btnEicon);
 
 		JButton btnChatroom = new JButton("New Chat Room");
 
@@ -289,7 +296,12 @@ public class ChatClientWindow extends JFrame {
 				}
 			}
 		});
-		// }}
+		// Add by Fred
+		btnEicon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ClientObject.send("/BoradCastIcon ");
+			}
+		});
 
 	}
 
@@ -298,6 +310,17 @@ public class ChatClientWindow extends JFrame {
 			doc.insertString(doc.getLength(), add + "\n", texture);
 			JScrollBar sBar = scrollPane.getVerticalScrollBar();
 			sBar.setValue(sBar.getMaximum());
+		} catch (Exception e) {
+
+		}
+	}
+	
+	public void addIcon(String add, SimpleAttributeSet texture) {
+		try {
+			
+			textPane.insertIcon(new ImageIcon("image/emoticon/01.gif"));
+			//JScrollBar sBar = scrollPane.getVerticalScrollBar();
+			//sBar.setValue(sBar.getMaximum());
 		} catch (Exception e) {
 
 		}
@@ -316,6 +339,27 @@ public class ChatClientWindow extends JFrame {
 							texture);
 					JScrollBar sBar = room.scrollPane.getVerticalScrollBar();
 					sBar.setValue(sBar.getMaximum());
+					break;
+				}
+			}
+
+		} catch (Exception e) {
+
+		}
+	}
+	
+	// Add by Fred
+	public void addRoomIcon(String roomNumber, String add,
+			SimpleAttributeSet texture) {
+		try {
+			StyledDocument roomDoc;
+
+			for (RoomPanel room : ClientObject.roomList) {
+				if (room.getName().equals(roomNumber)) {
+					roomDoc = room.getDoc();
+					room.textPane.insertIcon(new ImageIcon("image/emoticon/01.gif"));
+					//JScrollBar sBar = room.scrollPane.getVerticalScrollBar();
+					//sBar.setValue(sBar.getMaximum());
 					break;
 				}
 			}
