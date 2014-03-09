@@ -1,11 +1,14 @@
 package ChatClient.ClientGUI;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -91,11 +94,18 @@ public class RoomPanel extends JPanel {
 		popupMenu.setPopupSize(new Dimension(300, 300));
 		popupMenu.setAutoscrolls(true);
 		popupMenu.setLayout(new GridLayout(5, 5));
+		
+		final JPopupMenu popupMenuG = new JPopupMenu();
+		popupMenuG.setPopupSize(new Dimension(250, 250));
+		popupMenuG.setAutoscrolls(true);
+		popupMenuG.setLayout(new GridLayout(4, 4));
+		
 		btnEiconProfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				popupMenu.show(btnEiconProfile, 50, 50);
 			}
 		});
+		addPopup(btnEiconProfile, popupMenuG);
 		
 		// Add by Fred
 		for(int i=0; i<25; i++){
@@ -113,6 +123,25 @@ public class RoomPanel extends JPanel {
 			btnEiconList.get(i).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					client.send("/roomIcon "+ String.valueOf(btnEiconList.indexOf(arg0.getSource())+1) + " " + roomName );
+				}
+			});
+		}
+		
+		for (int i = 0; i < 16; i++) {
+			btnEicon = new JButton();
+			if (i >= 0 && i <= 8) {
+				btnEicon.setIcon(new ImageIcon("image/Gricon/menu/0" + String.valueOf(i + 1) + ".jpg"));
+				btnEicon.setRolloverIcon(new ImageIcon("image/Gricon/menu/0" + String.valueOf(i + 1) + ".jpg"));
+			} else {
+				btnEicon.setIcon(new ImageIcon("image/Gricon/menu/" + String.valueOf(i + 1) + ".jpg"));
+				btnEicon.setRolloverIcon(new ImageIcon("image/Gricon/menu/" + String.valueOf(i + 1) + ".jpg"));
+			}
+			btnEicon.setFocusPainted(false);
+			popupMenuG.add(btnEicon);
+			btnEiconList.add(btnEicon);
+			btnEiconList.get(i).addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					client.send("/roomGIcon "+ String.valueOf(btnEiconList.indexOf(arg0.getSource())+1) + " " + roomName );
 				}
 			});
 		}
@@ -204,4 +233,26 @@ public class RoomPanel extends JPanel {
 		memberLabel.setText(memberString);
 
 	}
+	
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
+	
+	
 }

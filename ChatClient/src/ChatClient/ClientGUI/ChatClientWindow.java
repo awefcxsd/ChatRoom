@@ -51,8 +51,8 @@ public class ChatClientWindow extends JFrame {
 	private JTextField EnterIP;
 	private JTextField EnterPort;
 	private JButton btnEicon = new JButton();
-	private Vector <JButton> btnEiconList;
-	
+	private Vector<JButton> btnEiconList;
+
 	JScrollPane scrollPane;
 	private List userList;
 	private ChatSlaveClient ClientObject;
@@ -67,7 +67,7 @@ public class ChatClientWindow extends JFrame {
 
 	public ChatClientWindow() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		btnEiconList = new  Vector <JButton>();
+		btnEiconList = new Vector<JButton>();
 		thisFrame = this;
 		Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, 12);
 
@@ -102,7 +102,7 @@ public class ChatClientWindow extends JFrame {
 
 		JLabel lblIp = new JLabel("IP");
 		lblIp.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 16));
-		//blIp.setForeground(Color.PINK);
+		// blIp.setForeground(Color.PINK);
 		lblIp.setForeground(Color.WHITE);
 		lblIp.setBounds(10, 16, 46, 15);
 		panel.add(lblIp);
@@ -156,8 +156,7 @@ public class ChatClientWindow extends JFrame {
 		scrollPane.setBackground(new Color(255, 255, 255, 255));
 		scrollPane.setBounds(5, 0, 467, 332);
 		panel_1.add(scrollPane);
-		scrollPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		textPane = new JTextPane();
 		textPane.setFont(font);
@@ -175,48 +174,70 @@ public class ChatClientWindow extends JFrame {
 		btnSend.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnSend.setBounds(10, 381, 87, 23);
 		panel_1.add(btnSend);
-		
-		
+
 		final JButton btnEiconProfile = new JButton("");
 		btnEiconProfile.setBounds(370, 341, 64, 64);
-		btnEiconProfile.setFocusPainted(false); 
+		btnEiconProfile.setFocusPainted(false);
 		btnEiconProfile.setIcon(new ImageIcon("image/emoticon/profile.jpg"));
 		btnEiconProfile.setRolloverIcon(new ImageIcon("image/emoticon/profile2.jpg"));
 		panel_1.add(btnEiconProfile);
-		
+
 		final JPopupMenu popupMenu = new JPopupMenu();
 		popupMenu.setPopupSize(new Dimension(300, 300));
 		popupMenu.setAutoscrolls(true);
 		popupMenu.setLayout(new GridLayout(5, 5));
-		//popupMenu.s;
+
+		final JPopupMenu popupMenuG = new JPopupMenu();
+		popupMenuG.setPopupSize(new Dimension(250, 250));
+		popupMenuG.setAutoscrolls(true);
+		popupMenuG.setLayout(new GridLayout(4, 4));
+
+		// popupMenu.s;
 		btnEiconProfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				popupMenu.show(btnEiconProfile, 50, 50);
 			}
 		});
-		//addPopup(btnEiconProfile, popupMenu);
+		addPopup(btnEiconProfile, popupMenuG);
 
 		// Add by Fred
-		for(int i=0; i<25; i++){
-			btnEicon = new JButton(); 
-			if(i>=0 && i<=8){
-				btnEicon.setIcon(new ImageIcon("image/emoticon/0"+ String.valueOf(i+1) + ".gif"));
-				btnEicon.setRolloverIcon(new ImageIcon("image/emoticon/0"+ String.valueOf(i+1) + ".gif"));
-			} else{
-				btnEicon.setIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
-				btnEicon.setRolloverIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
+		for (int i = 0; i < 25; i++) {
+			btnEicon = new JButton();
+			if (i >= 0 && i <= 8) {
+				btnEicon.setIcon(new ImageIcon("image/emoticon/0" + String.valueOf(i + 1) + ".gif"));
+				btnEicon.setRolloverIcon(new ImageIcon("image/emoticon/0" + String.valueOf(i + 1) + ".gif"));
+			} else {
+				btnEicon.setIcon(new ImageIcon("image/emoticon/" + String.valueOf(i + 1) + ".gif"));
+				btnEicon.setRolloverIcon(new ImageIcon("image/emoticon/" + String.valueOf(i + 1) + ".gif"));
 			}
-			btnEicon.setFocusPainted(false); 
+			btnEicon.setFocusPainted(false);
 			popupMenu.add(btnEicon);
 			btnEiconList.add(btnEicon);
 			btnEiconList.get(i).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					ClientObject.send("/BoradCastIcon "+ String.valueOf(btnEiconList.indexOf(arg0.getSource())+1));
+					ClientObject.send("/BoradCastIcon " + String.valueOf(btnEiconList.indexOf(arg0.getSource()) + 1));
 				}
 			});
 		}
 
-			
+		for (int i = 0; i < 16; i++) {
+			btnEicon = new JButton();
+			if (i >= 0 && i <= 8) {
+				btnEicon.setIcon(new ImageIcon("image/Gricon/menu/0" + String.valueOf(i + 1) + ".jpg"));
+				btnEicon.setRolloverIcon(new ImageIcon("image/Gricon/menu/0" + String.valueOf(i + 1) + ".jpg"));
+			} else {
+				btnEicon.setIcon(new ImageIcon("image/Gricon/menu/" + String.valueOf(i + 1) + ".jpg"));
+				btnEicon.setRolloverIcon(new ImageIcon("image/Gricon/menu/" + String.valueOf(i + 1) + ".jpg"));
+			}
+			btnEicon.setFocusPainted(false);
+			popupMenuG.add(btnEicon);
+			btnEiconList.add(btnEicon);
+			btnEiconList.get(i).addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					ClientObject.send("/BoradCastGIcon " + String.valueOf(btnEiconList.indexOf(arg0.getSource()) + 1));
+				}
+			});
+		}
 
 		JButton btnChatroom = new JButton("New Chat Room");
 		btnChatroom.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
@@ -238,12 +259,12 @@ public class ChatClientWindow extends JFrame {
 		btnSendFile.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnSendFile.setBounds(693, 475, 130, 23);
 		panel.add(btnSendFile);
-		
+
 		JButton btnVideo = new JButton("Video");
 		btnVideo.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnVideo.setBounds(693, 508, 130, 23);
 		panel.add(btnVideo);
-		
+
 		JLabel labelBack = new JLabel("");
 		labelBack.setIcon(new ImageIcon("image/insta.gif"));
 		labelBack.setBounds(0, 0, 877, 562);
@@ -263,9 +284,7 @@ public class ChatClientWindow extends JFrame {
 				port = new java.lang.Integer(port_str).intValue();
 				name = EnterName.getText();
 				if (name.isEmpty()) {
-					JOptionPane.showMessageDialog(thisFrame,
-							"UserName can not be empty", "Error",
-							JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(thisFrame, "UserName can not be empty", "Error", JOptionPane.INFORMATION_MESSAGE);
 				} else {
 					ClientObject.connectToServer(ip, port, name);
 					ClientObject.setName(name);
@@ -302,14 +321,12 @@ public class ChatClientWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 
-					RoomPanel currentRoom = (RoomPanel) tabbedPane
-							.getSelectedComponent();
+					RoomPanel currentRoom = (RoomPanel) tabbedPane.getSelectedComponent();
 					System.out.println("Room name " + currentRoom.getName());
 
 					String userName = userList.getSelectedItem();
 					System.out.println("Add memeber " + userName);
-					if (userName != null
-							&& !userName.equals(ClientObject.getName())) {
+					if (userName != null && !userName.equals(ClientObject.getName())) {
 
 						boolean alreadyChoose = false;
 
@@ -322,13 +339,11 @@ public class ChatClientWindow extends JFrame {
 						if (alreadyChoose) {
 							System.out.println("Member Already Added");
 						} else {
-							String sendText = "/invite "
-									+ currentRoom.getName() + " " + userName;
+							String sendText = "/invite " + currentRoom.getName() + " " + userName;
 							ClientObject.send(sendText);
 						}
 					} else {
-						System.out
-								.println("User Name Not Selected, Attempt to Add Oneself");
+						System.out.println("User Name Not Selected, Attempt to Add Oneself");
 
 					}
 
@@ -347,9 +362,7 @@ public class ChatClientWindow extends JFrame {
 					s.setLocationRelativeTo(thisFrame);
 					s.setVisible(true);
 				} else {
-					JOptionPane.showMessageDialog(thisFrame,
-							"User Name Not Selected", "Error",
-							JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(thisFrame, "User Name Not Selected", "Error", JOptionPane.INFORMATION_MESSAGE);
 				}
 
 			}
@@ -363,22 +376,18 @@ public class ChatClientWindow extends JFrame {
 					s.setLocationRelativeTo(thisFrame);
 					s.setVisible(true);
 				} else {
-					JOptionPane.showMessageDialog(thisFrame,
-							"User Name Not Selected", "Error",
-							JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(thisFrame, "User Name Not Selected", "Error", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
-		//add by Michael
+		// add by Michael
 		btnVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String userName = userList.getSelectedItem();
 				if (userName != null) {
-					ClientObject.send("/videoStream "+userName);
+					ClientObject.send("/videoStream " + userName);
 				} else {
-					JOptionPane.showMessageDialog(thisFrame,
-							"User Name Not Selected", "Error",
-							JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(thisFrame, "User Name Not Selected", "Error", JOptionPane.INFORMATION_MESSAGE);
 				}
 
 			}
@@ -394,19 +403,19 @@ public class ChatClientWindow extends JFrame {
 
 		}
 	}
-	
+
 	public void addIcon(String add, String IconIndex, SimpleAttributeSet texture) {
 		try {
-			doc.insertString(doc.getLength(), add , texture);
+			doc.insertString(doc.getLength(), add, texture);
 			textPane.setCaretPosition(doc.getLength());
 			int intIcon = Integer.valueOf(IconIndex);
-			if(intIcon >= 1 && intIcon <= 9){
-				textPane.insertIcon(new ImageIcon("image/emoticon/0"+ IconIndex + ".gif"));	
-			}else{
-				textPane.insertIcon(new ImageIcon("image/emoticon/"+ IconIndex + ".gif"));	
+			if (intIcon >= 1 && intIcon <= 9) {
+				textPane.insertIcon(new ImageIcon("image/emoticon/0" + IconIndex + ".gif"));
+			} else {
+				textPane.insertIcon(new ImageIcon("image/emoticon/" + IconIndex + ".gif"));
 			}
-						
-			doc.insertString(doc.getLength(), "\n" , texture);
+
+			doc.insertString(doc.getLength(), "\n", texture);
 			JScrollBar sBar = scrollPane.getVerticalScrollBar();
 			sBar.setValue(sBar.getMaximum());
 		} catch (Exception e) {
@@ -415,16 +424,14 @@ public class ChatClientWindow extends JFrame {
 	}
 
 	// Add by Sid
-	public void addRoomText(String roomNumber, String add,
-			SimpleAttributeSet texture) {
+	public void addRoomText(String roomNumber, String add, SimpleAttributeSet texture) {
 		try {
 			StyledDocument roomDoc;
 
 			for (RoomPanel room : ClientObject.roomList) {
 				if (room.getName().equals(roomNumber)) {
 					roomDoc = room.getDoc();
-					roomDoc.insertString(roomDoc.getLength(), add + "\n",
-							texture);
+					roomDoc.insertString(roomDoc.getLength(), add + "\n", texture);
 					JScrollBar sBar = room.scrollPane.getVerticalScrollBar();
 					sBar.setValue(sBar.getMaximum());
 					break;
@@ -435,28 +442,27 @@ public class ChatClientWindow extends JFrame {
 
 		}
 	}
-	
+
 	// Add by Fred
-	public void addRoomIcon(String roomNumber, String add, String IconIndex,
-			SimpleAttributeSet texture) {
+	public void addRoomIcon(String roomNumber, String add, String IconIndex, SimpleAttributeSet texture) {
 		try {
 			StyledDocument roomDoc;
 
 			for (RoomPanel room : ClientObject.roomList) {
 				if (room.getName().equals(roomNumber)) {
 					roomDoc = room.getDoc();
-					roomDoc.insertString(roomDoc.getLength(), add , texture);
+					roomDoc.insertString(roomDoc.getLength(), add, texture);
 					room.textPane.setCaretPosition(roomDoc.getLength());
 					int intIcon = Integer.valueOf(IconIndex);
-					if(intIcon >= 1 && intIcon <= 9){
-						room.textPane.insertIcon(new ImageIcon("image/emoticon/0"+ IconIndex + ".gif"));	
-					}else{
-						room.textPane.insertIcon(new ImageIcon("image/emoticon/"+ IconIndex + ".gif"));	
-					}				
-					roomDoc.insertString(roomDoc.getLength(), "\n" , texture);
+					if (intIcon >= 1 && intIcon <= 9) {
+						room.textPane.insertIcon(new ImageIcon("image/emoticon/0" + IconIndex + ".gif"));
+					} else {
+						room.textPane.insertIcon(new ImageIcon("image/emoticon/" + IconIndex + ".gif"));
+					}
+					roomDoc.insertString(roomDoc.getLength(), "\n", texture);
 					JScrollBar sBar = scrollPane.getVerticalScrollBar();
 					sBar.setValue(sBar.getMaximum());
-					break;					
+					break;
 				}
 			}
 
@@ -491,6 +497,7 @@ public class ChatClientWindow extends JFrame {
 		tabbedPane.remove(removeRoom);
 
 	}
+
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -498,11 +505,13 @@ public class ChatClientWindow extends JFrame {
 					showMenu(e);
 				}
 			}
+
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					showMenu(e);
 				}
 			}
+
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
