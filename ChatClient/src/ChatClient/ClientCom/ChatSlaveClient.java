@@ -87,6 +87,7 @@ public class ChatSlaveClient implements Runnable {
 			newRoom.setName(newName);
 			roomList.add(newRoom);
 			GUIObject.addNewTab(newRoom);
+			GUIObject.tabbedPane.setSelectedComponent(newRoom);
 
 			// Add by Sid
 		} else if (transferLine.startsWith("/userJoin")) {
