@@ -91,6 +91,7 @@ public class VideoGUI extends JFrame {
 			public void windowClosing(WindowEvent e) {
 				try {
 					disposeCapture();
+					recvThread.ds.close();
 					recvThread.action=false;
 				} catch (CaptureException e1) {
 					e1.printStackTrace();

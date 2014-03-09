@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import ChatClient.util.ImageComponent;
 
 public class Recv implements Runnable {
-	DatagramSocket ds;
+	public DatagramSocket ds;
 	byte[] buffer;
 	ImageComponent recvImage;
 	public boolean action = true;
@@ -30,22 +30,19 @@ public class Recv implements Runnable {
 		DatagramPacket p = new DatagramPacket(buffer, buffer.length);
 
 		try {
+			ds = new DatagramSocket(9100);
 			while (action) {
-				ds = new DatagramSocket(9100);
-				while (true) {
-					ds.receive(p);
-					byte[] data = p.getData();
-					ByteArrayInputStream bais = new ByteArrayInputStream(data);
+				ds.receive(p);
+				byte[] data = p.getData();
+				ByteArrayInputStream bais = new ByteArrayInputStream(data);
 
-					// Make a BufferedImage out of the incoming bytes
-					BufferedImage bimg = ImageIO.read(bais);
-					recvImage.setImage(bimg);
+				// Make a BufferedImage out of the incoming bytes
+				BufferedImage bimg = ImageIO.read(bais);
+				recvImage.setImage(bimg);
 
-				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 	}
 
