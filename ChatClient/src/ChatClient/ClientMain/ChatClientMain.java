@@ -25,5 +25,8 @@ public class ChatClientMain {
 		ChatClientWindow gui = new ChatClientWindow();
 	    gui.setLocation(100, 50);
 	    gui.setVisible(true);
+	    
+	    
+	    
     }
 }
