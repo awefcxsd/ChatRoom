@@ -166,18 +166,18 @@ public class ChatClientWindow extends JFrame {
 
 		EnterMessage = new JTextField();
 		EnterMessage.setFont(font);
-		EnterMessage.setBounds(10, 350, 309, 21);
+		EnterMessage.setBounds(4, 336, 264, 69);
 		panel_1.add(EnterMessage);
 		EnterMessage.setColumns(10);
 
 		JButton btnSend = new JButton("Send");
 		btnSend.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
-		btnSend.setBounds(10, 381, 87, 23);
+		btnSend.setBounds(288, 336, 87, 23);
 		panel_1.add(btnSend);
 
 		final JButton btnEiconProfile = new JButton("");
-		btnEiconProfile.setBounds(370, 341, 64, 64);
-		btnEiconProfile.setFocusPainted(false);
+		btnEiconProfile.setBounds(395, 341, 64, 64);
+		btnEiconProfile.setFocusPainted(false); 
 		btnEiconProfile.setIcon(new ImageIcon("image/emoticon/profile.jpg"));
 		btnEiconProfile.setRolloverIcon(new ImageIcon("image/emoticon/profile2.jpg"));
 		panel_1.add(btnEiconProfile);
