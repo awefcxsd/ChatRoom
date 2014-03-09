@@ -71,7 +71,7 @@ public class ChatClientWindow extends JFrame {
 		// {{ Layout set up
 		setResizable(false);
 		setTitle("ChatClient");
-		setSize(883, 574);
+		setSize(883, 590);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		BackGroundPanel panel = new BackGroundPanel();
@@ -208,6 +208,14 @@ public class ChatClientWindow extends JFrame {
 		JButton btnSendFile = new JButton("Send File");
 		btnSendFile.setBounds(699, 485, 124, 23);
 		panel.add(btnSendFile);
+		
+		JButton btnVideo = new JButton("Video");
+		btnVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnVideo.setBounds(699, 518, 124, 23);
+		panel.add(btnVideo);
 
 		// }}
 

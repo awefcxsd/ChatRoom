@@ -129,6 +129,7 @@ public class MasterClient implements Runnable {
 			thisRoom.removeClient(this);
 			thisRoom.sendRoomMsg("/leaveRoom " + RoomNumber + " " + this.ClientName);
 			send("/closeRoom " + RoomNumber);
+			
 		} else if (msg.startsWith("/sendFile")) {
 			String receiver = msg.split(" ", 2)[1];
 			String ip = ""+sock.getInetAddress();
@@ -137,6 +138,19 @@ public class MasterClient implements Runnable {
 			MasterClient Recv = mainThread.search(receiver);
 			
 			Recv.send("/recvFile "+ClientName+" "+ip);
+			
+		} else if (msg.startsWith("/videoStream")) {
+			String receiver = msg.split(" ", 2)[1];
+			String ip = ""+sock.getInetAddress();
+			ip=ip.substring(1);
+
+			MasterClient Recv = mainThread.search(receiver);
+			Recv.send("/videoStream "+ClientName+" "+ip);
+			
+			ip = ""+Recv.sock.getInetAddress();
+			ip=ip.substring(1);
+			
+			send("/videoStream "+Recv.ClientName+" "+ip);
 		}
 
 	}
