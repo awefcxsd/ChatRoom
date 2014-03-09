@@ -1,5 +1,6 @@
 package ChatClient.ClientGUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import java.awt.GridLayout;
@@ -47,6 +48,8 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
+import java.io.File;
+import java.io.IOException;
 
 public class ChatClientWindow extends JFrame {
 	/**
@@ -159,7 +162,7 @@ public class ChatClientWindow extends JFrame {
 		panel_1.setLayout(null);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBackground(new Color(255, 255, 255, 255));
+		scrollPane.setBackground(new Color(255, 255, 255, 0));
 		scrollPane.setBounds(0, 0, 472, 332);
 		panel_1.add(scrollPane);
 		scrollPane
@@ -250,13 +253,23 @@ public class ChatClientWindow extends JFrame {
 		btnVideo.setBounds(693, 508, 130, 23);
 		panel.add(btnVideo);
 		
-		ImageComponent back=new ImageComponent();
-		back.setBounds(0, 0, 306, 300);
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		MediaTracker tracker = new MediaTracker(this);
-		Image image = toolkit.getImage("");
-		back.setImage(image);
-		panel.add(back);
+//		ImageComponent back=new ImageComponent();
+//		back.setBounds(0, 0, 1000, 1000);
+//		Image image;
+//		try {
+//			image = ImageIO.read(new File("image/back1.jpg"));
+//			back.setImage(image);
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
+//		panel.add(back);
+		
+		JLabel backLabel = new JLabel("");
+		backLabel.setIcon(new ImageIcon("image/insta.gif"));
+		backLabel.setBounds(0, 0, 877, 562);
+		panel.add(backLabel);
 
 		// }}
 
