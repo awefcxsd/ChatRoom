@@ -180,16 +180,16 @@ public class ChatClientWindow extends JFrame {
 			btnEicon = new JButton(); 
 			if(i>=0 && i<=8){
 				btnEicon.setIcon(new ImageIcon("image/emoticon/0"+ String.valueOf(i+1) + ".gif"));
+				btnEicon.setRolloverIcon(new ImageIcon("image/emoticon/0"+ String.valueOf(i+1) + ".gif"));
 			} else{
 				btnEicon.setIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
+				btnEicon.setRolloverIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
 			}
 			popupMenu.add(btnEicon);
 			btnEiconList.add(btnEicon);
 			btnEiconList.get(i).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					ClientObject.send("/BoradCastIcon "+ String.valueOf(btnEiconList.indexOf(arg0.getSource())+1));
-					//this.getText();
-					//System.out.println(btnEiconList.size());
 				}
 			});
 		}
