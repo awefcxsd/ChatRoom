@@ -243,6 +243,11 @@ public class ChatClientWindow extends JFrame {
 		btnVideo.setFont(font);
 		btnVideo.setBounds(693, 508, 130, 23);
 		panel.add(btnVideo);
+		
+		JLabel labelBack = new JLabel("");
+		labelBack.setIcon(new ImageIcon("image/insta.gif"));
+		labelBack.setBounds(0, 0, 877, 562);
+		panel.add(labelBack);
 
 		// }}
 
