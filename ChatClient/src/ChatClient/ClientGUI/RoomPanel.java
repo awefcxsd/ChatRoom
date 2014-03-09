@@ -84,7 +84,7 @@ public class RoomPanel extends JPanel {
 		btnEiconProfile.setBounds(370, 341, 64, 64);
 		btnEiconProfile.setFocusPainted(false); 
 		btnEiconProfile.setIcon(new ImageIcon("image/emoticon/profile.jpg"));
-		btnEiconProfile.setRolloverIcon(new ImageIcon("image/emoticon/profile.jpg"));
+		btnEiconProfile.setRolloverIcon(new ImageIcon("image/emoticon/profile2.jpg"));
 		this.add(btnEiconProfile);
 		
 		final JPopupMenu popupMenu = new JPopupMenu();
