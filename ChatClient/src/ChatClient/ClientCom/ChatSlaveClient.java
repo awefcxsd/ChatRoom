@@ -81,7 +81,14 @@ public class ChatSlaveClient implements Runnable {
 			GUIObject.addIcon(Sender + " : " , IconIndex ,recv);
 
 			// Add by Sid
-		} else if (transferLine.startsWith("/openNewRoom")) {
+		} else if (transferLine.startsWith("/BoradCastGIcon")) {
+			String IconIndex = transferLine.split(" ", 3)[1];
+			String Sender = transferLine.split(" ", 3)[2];
+			SimpleAttributeSet recv = new SimpleAttributeSet();
+			StyleConstants.setForeground(recv, Color.BLACK);
+			GUIObject.addIcon(Sender + " : " , IconIndex ,recv);
+
+		}else if (transferLine.startsWith("/openNewRoom")) {
 			RoomPanel newRoom = new RoomPanel(this);
 			String newName = transferLine.split(" ", 2)[1];
 			newRoom.setName(newName);

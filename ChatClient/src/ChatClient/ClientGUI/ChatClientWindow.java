@@ -422,6 +422,24 @@ public class ChatClientWindow extends JFrame {
 
 		}
 	}
+	
+	public void addGIcon(String add, String IconIndex, SimpleAttributeSet texture) {
+		try {
+			doc.insertString(doc.getLength(), add, texture);
+			textPane.setCaretPosition(doc.getLength());
+			int intIcon = Integer.valueOf(IconIndex);
+			if (intIcon >= 1 && intIcon <= 9) {
+				textPane.insertIcon(new ImageIcon("image/Gricon/show/0" + IconIndex + ".gif"));
+			} else {
+				textPane.insertIcon(new ImageIcon("image/Gricon/show/" + IconIndex + ".gif"));
+			}
+			doc.insertString(doc.getLength(), "\n", texture);
+			JScrollBar sBar = scrollPane.getVerticalScrollBar();
+			sBar.setValue(sBar.getMaximum());
+		} catch (Exception e) {
+
+		}
+	}
 
 	// Add by Sid
 	public void addRoomText(String roomNumber, String add, SimpleAttributeSet texture) {
@@ -458,6 +476,33 @@ public class ChatClientWindow extends JFrame {
 						room.textPane.insertIcon(new ImageIcon("image/emoticon/0" + IconIndex + ".gif"));
 					} else {
 						room.textPane.insertIcon(new ImageIcon("image/emoticon/" + IconIndex + ".gif"));
+					}
+					roomDoc.insertString(roomDoc.getLength(), "\n", texture);
+					JScrollBar sBar = scrollPane.getVerticalScrollBar();
+					sBar.setValue(sBar.getMaximum());
+					break;
+				}
+			}
+
+		} catch (Exception e) {
+
+		}
+	}
+	
+	public void addRoomGIcon(String roomNumber, String add, String IconIndex, SimpleAttributeSet texture) {
+		try {
+			StyledDocument roomDoc;
+
+			for (RoomPanel room : ClientObject.roomList) {
+				if (room.getName().equals(roomNumber)) {
+					roomDoc = room.getDoc();
+					roomDoc.insertString(roomDoc.getLength(), add, texture);
+					room.textPane.setCaretPosition(roomDoc.getLength());
+					int intIcon = Integer.valueOf(IconIndex);
+					if (intIcon >= 1 && intIcon <= 9) {
+						room.textPane.insertIcon(new ImageIcon("image/Gricon/show/0" + IconIndex + ".gif"));
+					} else {
+						room.textPane.insertIcon(new ImageIcon("image/Gricon/show/" + IconIndex + ".gif"));
 					}
 					roomDoc.insertString(roomDoc.getLength(), "\n", texture);
 					JScrollBar sBar = scrollPane.getVerticalScrollBar();
