@@ -80,7 +80,7 @@ public class ReceiveFileGUI extends JDialog{
 	public void setFileInformation(String fileName, int fileSize) {
 		// TODO Auto-generated method stub
 		this.fileName=fileName;
-		lblNewLabel.setText("File Name: "+fileName+"  File Size"+fileSize);
+		lblNewLabel.setText("File Name: "+fileName+"  File Size: "+fileSize+" bytes");
 	}
 
 	public File showGUI() {
