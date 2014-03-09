@@ -26,6 +26,8 @@ public class RoomPanel extends JPanel {
 	public JTextField EnterMessage;
 	public JButton btnSend;
 	public JButton btnEicon;
+	private Vector <JButton> btnEiconList;
+	
 	public String roomName;
 	public StyledDocument doc;
 	public ChatSlaveClient client;
@@ -38,6 +40,7 @@ public class RoomPanel extends JPanel {
 
 		client = clientObject;
 		roomUsers = new Vector<String>();
+		btnEiconList = new  Vector <JButton>();
 
 		this.setBackground(new Color(255, 255, 255, 100));
 		// tabbedPane.addTab("Main", null, this, null);
