@@ -36,6 +36,11 @@ import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Dimension;
 
 public class ChatClientWindow extends JFrame {
 	/**
@@ -45,6 +50,7 @@ public class ChatClientWindow extends JFrame {
 	private JTextField EnterMessage;
 	private JTextField EnterIP;
 	private JTextField EnterPort;
+	private JButton btnEicon []= new JButton [25];
 	JScrollPane scrollPane;
 	private List userList;
 	private ChatSlaveClient ClientObject;
@@ -56,6 +62,7 @@ public class ChatClientWindow extends JFrame {
 	public JTabbedPane tabbedPane;
 	private JFrame thisFrame;
 	public JTextPane textPane;
+	int i;
 
 	public ChatClientWindow() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -154,10 +161,36 @@ public class ChatClientWindow extends JFrame {
 		btnSend.setBounds(10, 381, 87, 23);
 		panel_1.add(btnSend);
 		
-		JButton btnEicon = new JButton("");
-		btnEicon.setIcon(new ImageIcon(ChatClientWindow.class.getResource("/ChatClient/eiconProfile.gif")));
-		btnEicon.setBounds(370, 343, 60, 60);
-		panel_1.add(btnEicon);
+		
+		JButton btnEiconProfile = new JButton("");
+		btnEiconProfile.setBounds(370, 343, 60, 60);
+		panel_1.add(btnEiconProfile);
+		
+		JPopupMenu popupMenu = new JPopupMenu();
+		popupMenu.setPopupSize(new Dimension(300, 300));
+		popupMenu.setAutoscrolls(true);
+		popupMenu.setLayout(new GridLayout(5, 5));
+		//popupMenu.s;
+		addPopup(btnEiconProfile, popupMenu);
+
+		// Add by Fred
+		for(i=0; i<25; i++){
+			btnEicon[i] = new JButton(""); 
+			if(i>=0 && i<=8){
+				btnEicon[i].setIcon(new ImageIcon("image/emoticon/0"+ String.valueOf(i+1) + ".gif"));
+			}
+			else{
+				btnEicon[i].setIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
+			}
+			popupMenu.add(btnEicon[i]);
+			btnEicon[i].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					ClientObject.send("/BoradCastIcon "+ String.valueOf(i+1));
+				}
+			});
+		}
+
+			
 
 		JButton btnChatroom = new JButton("New Chat Room");
 
@@ -296,12 +329,6 @@ public class ChatClientWindow extends JFrame {
 				}
 			}
 		});
-		// Add by Fred
-		btnEicon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				ClientObject.send("/BoradCastIcon ");
-			}
-		});
 
 	}
 
@@ -317,10 +344,12 @@ public class ChatClientWindow extends JFrame {
 	
 	public void addIcon(String add, SimpleAttributeSet texture) {
 		try {
-			
+			doc.insertString(doc.getLength(), add , texture);
+			textPane.setCaretPosition(doc.getLength());
 			textPane.insertIcon(new ImageIcon("image/emoticon/01.gif"));
-			//JScrollBar sBar = scrollPane.getVerticalScrollBar();
-			//sBar.setValue(sBar.getMaximum());
+			doc.insertString(doc.getLength(), "\n" , texture);
+			JScrollBar sBar = scrollPane.getVerticalScrollBar();
+			sBar.setValue(sBar.getMaximum());
 		} catch (Exception e) {
 
 		}
@@ -357,9 +386,12 @@ public class ChatClientWindow extends JFrame {
 			for (RoomPanel room : ClientObject.roomList) {
 				if (room.getName().equals(roomNumber)) {
 					roomDoc = room.getDoc();
-					room.textPane.insertIcon(new ImageIcon("image/emoticon/01.gif"));
-					//JScrollBar sBar = room.scrollPane.getVerticalScrollBar();
-					//sBar.setValue(sBar.getMaximum());
+					roomDoc.insertString(roomDoc.getLength(), add , texture);
+					room.textPane.setCaretPosition(roomDoc.getLength());
+					room.textPane.insertIcon(new ImageIcon("image/emoticon/01.gif"));					
+					roomDoc.insertString(roomDoc.getLength(), "\n" , texture);
+					JScrollBar sBar = scrollPane.getVerticalScrollBar();
+					sBar.setValue(sBar.getMaximum());
 					break;
 				}
 			}
@@ -395,5 +427,21 @@ public class ChatClientWindow extends JFrame {
 		tabbedPane.remove(removeRoom);
 
 	}
-
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
 }

@@ -69,7 +69,7 @@ public class RoomPanel extends JPanel {
 		this.add(btnLeave);
 
 		btnEicon = new JButton();
-		btnEicon.setIcon(new ImageIcon(RoomPanel.class.getResource("/ChatClient/eiconProfile.gif")));
+		btnEicon.setIcon(new ImageIcon("image/emoticon/01.gif"));
 		btnEicon.setBounds(370, 343, 60, 60);
 		this.add(btnEicon);
 		
