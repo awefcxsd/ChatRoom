@@ -45,6 +45,7 @@ public class VideoGUI extends JFrame {
 	Recv recvThread;
 	
 	public VideoGUI(String ip,String name) {
+		setResizable(false);
 		this.setTitle("µø°T with "+name);
 		
 		IpAddr=ip;
@@ -91,9 +92,13 @@ public class VideoGUI extends JFrame {
 			public void windowClosing(WindowEvent e) {
 				try {
 					disposeCapture();
-					recvThread.ds.close();
-					recvThread.action=false;
 				} catch (CaptureException e1) {
+					e1.printStackTrace();
+				}
+				try{
+				recvThread.ds.close();
+				recvThread.action=false;}
+				catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			}
