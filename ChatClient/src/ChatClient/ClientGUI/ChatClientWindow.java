@@ -74,7 +74,7 @@ public class ChatClientWindow extends JFrame {
 		// {{ Layout set up
 		setResizable(false);
 		setTitle("ChatClient");
-		setSize(883, 590);
+		setSize(879, 586);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 
 		BackGroundPanel panel = new BackGroundPanel();
@@ -154,7 +154,7 @@ public class ChatClientWindow extends JFrame {
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBackground(new Color(255, 255, 255, 255));
-		scrollPane.setBounds(0, 0, 472, 332);
+		scrollPane.setBounds(5, 0, 467, 332);
 		panel_1.add(scrollPane);
 		scrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

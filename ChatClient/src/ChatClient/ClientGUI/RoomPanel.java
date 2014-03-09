@@ -53,7 +53,7 @@ public class RoomPanel extends JPanel {
 
 		scrollPane = new JScrollPane();
 		scrollPane.setBackground(new Color(255, 255, 255, 255));
-		scrollPane.setBounds(0, 25, 472, 307);
+		scrollPane.setBounds(5, 25, 467, 307);
 		this.add(scrollPane);
 		scrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -130,7 +130,7 @@ public class RoomPanel extends JPanel {
 		
 		memberLabel = new JTextField("Members: ");
 		memberLabel.setFont(font);
-		memberLabel.setBounds(0, 0, 472, 23);
+		memberLabel.setBounds(5, 0, 467, 23);
 		memberLabel.setEditable(false);
 		this.add(memberLabel);
 
