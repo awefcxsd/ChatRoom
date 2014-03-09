@@ -71,12 +71,12 @@ public class RoomPanel extends JPanel {
 		EnterMessage.setColumns(10);
 
 		btnSend = new JButton("Send");
-		btnSend.setFont(font);
+		btnSend.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnSend.setBounds(10, 381, 87, 23);
 		this.add(btnSend);
 
 		btnLeave = new JButton("Leave");
-		btnLeave.setFont(font);
+		btnLeave.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnLeave.setBounds(120, 381, 87, 23);
 		this.add(btnLeave);
 
@@ -123,7 +123,7 @@ public class RoomPanel extends JPanel {
 				client.send("/roomAlarm " + roomName);
 			}
 		});
-		btnVibrate.setFont(new Font("DialogInput", Font.PLAIN, 12));
+		btnVibrate.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnVibrate.setBounds(230, 381, 87, 23);
 		add(btnVibrate);
 
