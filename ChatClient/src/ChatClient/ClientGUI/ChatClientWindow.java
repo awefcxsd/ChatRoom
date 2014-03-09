@@ -96,7 +96,7 @@ public class ChatClientWindow extends JFrame {
 		panel.add(EnterPort);
 
 		final JButton btnConnect = new JButton("Connect");
-		btnConnect.setFont(font);
+		btnConnect.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnConnect.setBounds(10, 184, 124, 23);
 		panel.add(btnConnect);
 
@@ -172,7 +172,7 @@ public class ChatClientWindow extends JFrame {
 		EnterMessage.setColumns(10);
 
 		JButton btnSend = new JButton("Send");
-		btnSend.setFont(font);
+		btnSend.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnSend.setBounds(10, 381, 87, 23);
 		panel_1.add(btnSend);
 		
@@ -219,28 +219,28 @@ public class ChatClientWindow extends JFrame {
 			
 
 		JButton btnChatroom = new JButton("New Chat Room");
-		btnChatroom.setFont(font);
+		btnChatroom.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 
 		btnChatroom.setBounds(10, 217, 124, 23);
 		panel.add(btnChatroom);
 
 		JButton btnAddMember = new JButton("Add Member");
-		btnAddMember.setFont(font);
+		btnAddMember.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnAddMember.setBounds(693, 410, 130, 23);
 		panel.add(btnAddMember);
 
 		JButton btnSecret = new JButton("Secret Message");
-		btnSecret.setFont(font);
+		btnSecret.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnSecret.setBounds(693, 442, 130, 23);
 		panel.add(btnSecret);
 
 		JButton btnSendFile = new JButton("Send File");
-		btnSendFile.setFont(font);
+		btnSendFile.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnSendFile.setBounds(693, 475, 130, 23);
 		panel.add(btnSendFile);
 		
 		JButton btnVideo = new JButton("Video");
-		btnVideo.setFont(font);
+		btnVideo.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnVideo.setBounds(693, 508, 130, 23);
 		panel.add(btnVideo);
 		
