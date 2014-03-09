@@ -221,25 +221,25 @@ public class ChatClientWindow extends JFrame {
 				}
 			});
 		}
-
-		for (int i = 0; i < 16; i++) {
-			btnEicon = new JButton();
-			if (i >= 0 && i <= 8) {
-				btnEicon.setIcon(new ImageIcon("image/Gricon/menu/0" + String.valueOf(i + 1) + ".jpg"));
-				btnEicon.setRolloverIcon(new ImageIcon("image/Gricon/menu/0" + String.valueOf(i + 1) + ".jpg"));
-			} else {
-				btnEicon.setIcon(new ImageIcon("image/Gricon/menu/" + String.valueOf(i + 1) + ".jpg"));
-				btnEicon.setRolloverIcon(new ImageIcon("image/Gricon/menu/" + String.valueOf(i + 1) + ".jpg"));
-			}
-			btnEicon.setFocusPainted(false);
-			popupMenuG.add(btnEicon);
-			btnEiconGList.add(btnEicon);
-			btnEiconGList.get(i).addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					ClientObject.send("/BoradCastGIcon " + String.valueOf(btnEiconGList.indexOf(arg0.getSource()) + 1));
-				}
-			});
-		}
+		//封印
+//		for (int i = 0; i < 16; i++) {
+//			btnEicon = new JButton();
+//			if (i >= 0 && i <= 8) {
+//				btnEicon.setIcon(new ImageIcon("image/Gricon/menu/0" + String.valueOf(i + 1) + ".jpg"));
+//				btnEicon.setRolloverIcon(new ImageIcon("image/Gricon/menu/0" + String.valueOf(i + 1) + ".jpg"));
+//			} else {
+//				btnEicon.setIcon(new ImageIcon("image/Gricon/menu/" + String.valueOf(i + 1) + ".jpg"));
+//				btnEicon.setRolloverIcon(new ImageIcon("image/Gricon/menu/" + String.valueOf(i + 1) + ".jpg"));
+//			}
+//			btnEicon.setFocusPainted(false);
+//			popupMenuG.add(btnEicon);
+//			btnEiconGList.add(btnEicon);
+//			btnEiconGList.get(i).addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent arg0) {
+//					ClientObject.send("/BoradCastGIcon " + String.valueOf(btnEiconGList.indexOf(arg0.getSource()) + 1));
+//				}
+//			});
+//		}
 
 		JButton btnChatroom = new JButton("New Chat Room");
 		btnChatroom.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
