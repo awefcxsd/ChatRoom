@@ -41,6 +41,7 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
+import javax.swing.JToggleButton;
 
 public class ChatClientWindow extends JFrame {
 	/**
@@ -168,29 +169,29 @@ public class ChatClientWindow extends JFrame {
 
 		EnterMessage = new JTextField();
 		EnterMessage.setFont(font);
-		EnterMessage.setBounds(4, 336, 264, 69);
+		EnterMessage.setBounds(4, 336, 286, 41);
 		panel_1.add(EnterMessage);
 		EnterMessage.setColumns(10);
 
 		JButton btnSend = new JButton("Send");
 		btnSend.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
-		btnSend.setBounds(288, 336, 87, 23);
+		btnSend.setBounds(300, 336, 87, 23);
 		panel_1.add(btnSend);
 
 		final JButton btnEiconProfile = new JButton("");
-		btnEiconProfile.setBounds(395, 341, 64, 64);
+		btnEiconProfile.setBounds(395, 341, 60, 60);
 		btnEiconProfile.setFocusPainted(false); 
 		btnEiconProfile.setIcon(new ImageIcon("image/emoticon/profile.jpg"));
 		btnEiconProfile.setRolloverIcon(new ImageIcon("image/emoticon/profile2.jpg"));
 		panel_1.add(btnEiconProfile);
 
 		final JPopupMenu popupMenu = new JPopupMenu();
-		popupMenu.setPopupSize(new Dimension(300, 300));
+		popupMenu.setPopupSize(new Dimension(250, 250));
 		popupMenu.setAutoscrolls(true);
 		popupMenu.setLayout(new GridLayout(5, 5));
 
 		final JPopupMenu popupMenuG = new JPopupMenu();
-		popupMenuG.setPopupSize(new Dimension(250, 250));
+		popupMenuG.setPopupSize(new Dimension(200, 200));
 		popupMenuG.setAutoscrolls(true);
 		popupMenuG.setLayout(new GridLayout(4, 4));
 
@@ -201,6 +202,32 @@ public class ChatClientWindow extends JFrame {
 			}
 		});
 		addPopup(btnEiconProfile, popupMenuG);
+		
+		JButton size = new JButton("");
+		size.setBounds(215, 382, 23, 23);
+		panel_1.add(size);
+		
+		JToggleButton bold = new JToggleButton("");
+	
+		bold.setIcon(new ImageIcon("image/Font/bold.png"));
+		bold.setBounds(240, 382, 20, 20);
+		panel_1.add(bold);
+		
+		bold.addActionListener(new ActionListener() { 
+			private boolean flag = true;
+			ImageIcon icon1 = new ImageIcon("image/Font/bold.png"); 
+			ImageIcon icon2	= new ImageIcon("image/Font/bold2.png");
+
+			public void actionPerformed(ActionEvent e) {
+				((JToggleButton)e.getSource()).setIcon( flag ? icon2 : icon1 );
+				flag = !flag;
+			}
+		});
+		
+		JButton color = new JButton("");
+		color.setBounds(265, 382, 23, 23);
+		panel_1.add(color);
+
 
 		// Add by Fred
 		for (int i = 0; i < 25; i++) {

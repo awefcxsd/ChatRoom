@@ -23,6 +23,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.StyledDocument;
 
 import ChatClient.ClientCom.ChatSlaveClient;
+import javax.swing.JToggleButton;
 
 //Add by Sid
 
@@ -44,6 +45,9 @@ public class RoomPanel extends JPanel {
 	private JTextField memberLabel;
 	private JButton btnLeave;
 	private JButton btnVibrate;
+	private JButton button;
+	private JToggleButton toggleButton;
+	private JButton button_1;
 
 	public RoomPanel(ChatSlaveClient clientObject) {
 		Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, 12);
@@ -71,22 +75,22 @@ public class RoomPanel extends JPanel {
 
 		EnterMessage = new JTextField();
 		EnterMessage.setFont(font);
-		EnterMessage.setBounds(4, 336, 264, 69);
+		EnterMessage.setBounds(4, 336, 286, 41);
 		this.add(EnterMessage);
 		EnterMessage.setColumns(10);
 
 		btnSend = new JButton("Send");
 		btnSend.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
-		btnSend.setBounds(288, 336, 87, 23);
+		btnSend.setBounds(300, 336, 87, 23);
 		this.add(btnSend);
 
 		btnLeave = new JButton("Leave");
 		btnLeave.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
-		btnLeave.setBounds(288, 382, 87, 23);
+		btnLeave.setBounds(300, 382, 87, 23);
 		this.add(btnLeave);
 
 		final JButton btnEiconProfile = new JButton("");
-		btnEiconProfile.setBounds(395, 341, 64, 64);
+		btnEiconProfile.setBounds(395, 341, 60, 60);
 		btnEiconProfile.setFocusPainted(false); 
 		btnEiconProfile.setIcon(new ImageIcon("image/emoticon/profile.jpg"));
 		btnEiconProfile.setRolloverIcon(new ImageIcon("image/emoticon/profile2.jpg"));
@@ -155,7 +159,7 @@ public class RoomPanel extends JPanel {
 			}
 		});
 		btnVibrate.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
-		btnVibrate.setBounds(288, 359, 87, 23);
+		btnVibrate.setBounds(300, 359, 87, 23);
 		add(btnVibrate);
 
 		
@@ -164,6 +168,18 @@ public class RoomPanel extends JPanel {
 		memberLabel.setBounds(5, 0, 467, 23);
 		memberLabel.setEditable(false);
 		this.add(memberLabel);
+		
+		button = new JButton("");
+		button.setBounds(215, 382, 23, 23);
+		add(button);
+		
+		toggleButton = new JToggleButton("");
+		toggleButton.setBounds(242, 382, 23, 23);
+		add(toggleButton);
+		
+		button_1 = new JButton("");
+		button_1.setBounds(267, 382, 23, 23);
+		add(button_1);
 
 		doc = textPane.getStyledDocument();
 
