@@ -69,22 +69,22 @@ public class RoomPanel extends JPanel {
 
 		EnterMessage = new JTextField();
 		EnterMessage.setFont(font);
-		EnterMessage.setBounds(10, 350, 309, 21);
+		EnterMessage.setBounds(4, 336, 264, 69);
 		this.add(EnterMessage);
 		EnterMessage.setColumns(10);
 
 		btnSend = new JButton("Send");
 		btnSend.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
-		btnSend.setBounds(10, 381, 87, 23);
+		btnSend.setBounds(288, 336, 87, 23);
 		this.add(btnSend);
 
 		btnLeave = new JButton("Leave");
 		btnLeave.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
-		btnLeave.setBounds(120, 381, 87, 23);
+		btnLeave.setBounds(288, 382, 87, 23);
 		this.add(btnLeave);
 
 		final JButton btnEiconProfile = new JButton("");
-		btnEiconProfile.setBounds(370, 341, 64, 64);
+		btnEiconProfile.setBounds(395, 341, 64, 64);
 		btnEiconProfile.setFocusPainted(false); 
 		btnEiconProfile.setIcon(new ImageIcon("image/emoticon/profile.jpg"));
 		btnEiconProfile.setRolloverIcon(new ImageIcon("image/emoticon/profile2.jpg"));
@@ -153,7 +153,7 @@ public class RoomPanel extends JPanel {
 			}
 		});
 		btnVibrate.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
-		btnVibrate.setBounds(230, 381, 87, 23);
+		btnVibrate.setBounds(288, 359, 87, 23);
 		add(btnVibrate);
 
 		
