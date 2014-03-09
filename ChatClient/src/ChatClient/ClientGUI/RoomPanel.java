@@ -75,7 +75,8 @@ public class RoomPanel extends JPanel {
 		this.add(btnLeave);
 
 		final JButton btnEiconProfile = new JButton("");
-		btnEiconProfile.setBounds(370, 343, 60, 60);
+		btnEiconProfile.setBounds(370, 341, 64, 64);
+		btnEiconProfile.setFocusPainted(false); 
 		btnEiconProfile.setIcon(new ImageIcon("image/emoticon/profile.jpg"));
 		btnEiconProfile.setRolloverIcon(new ImageIcon("image/emoticon/profile.jpg"));
 		this.add(btnEiconProfile);
@@ -100,6 +101,7 @@ public class RoomPanel extends JPanel {
 				btnEicon.setIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
 				btnEicon.setRolloverIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
 			}
+			btnEicon.setFocusPainted(false); 
 			popupMenu.add(btnEicon);
 			btnEiconList.add(btnEicon);
 			btnEiconList.get(i).addActionListener(new ActionListener() {

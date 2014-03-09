@@ -69,6 +69,7 @@ public class ChatClientWindow extends JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		btnEiconList = new  Vector <JButton>();
 		thisFrame = this;
+		Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, 12);
 
 		// {{ Layout set up
 		setResizable(false);
@@ -81,46 +82,54 @@ public class ChatClientWindow extends JFrame {
 		panel.setLayout(null);
 
 		EnterIP = new JTextField();
+		EnterIP.setFont(font);
 		EnterIP.setText("140.112.18.205");
 		EnterIP.setBounds(10, 36, 124, 21);
 		panel.add(EnterIP);
 		EnterIP.setColumns(10);
 
 		EnterPort = new JTextField();
+		EnterPort.setFont(font);
 		EnterPort.setText("9987");
 		EnterPort.setColumns(10);
 		EnterPort.setBounds(10, 91, 124, 21);
 		panel.add(EnterPort);
 
 		final JButton btnConnect = new JButton("Connect");
-
+		btnConnect.setFont(font);
 		btnConnect.setBounds(10, 184, 124, 23);
 		panel.add(btnConnect);
 
 		JLabel lblIp = new JLabel("IP");
+		lblIp.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 16));
+		//blIp.setForeground(Color.PINK);
 		lblIp.setForeground(Color.WHITE);
-		lblIp.setBounds(10, 22, 46, 15);
+		lblIp.setBounds(10, 16, 46, 15);
 		panel.add(lblIp);
 
 		JLabel lblPort = new JLabel("Port");
+		lblPort.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 16));
 		lblPort.setForeground(Color.WHITE);
 		lblPort.setBounds(10, 67, 46, 15);
 		panel.add(lblPort);
 
 		JLabel lblName = new JLabel("Name");
+		lblName.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 16));
 		lblName.setForeground(Color.WHITE);
 		lblName.setBounds(10, 122, 46, 15);
 		panel.add(lblName);
 
 		EnterName = new JTextField();
+		EnterName.setFont(font);
 		EnterName.setText("");
 		EnterName.setColumns(10);
 		EnterName.setBounds(10, 147, 124, 21);
 		panel.add(EnterName);
 
 		userList = new List();
+		userList.setFont(new Font(Font.DIALOG_INPUT, Font.PLAIN, 16));
 		userList.setMultipleSelections(false);
-		userList.setBounds(689, 59, 143, 354);
+		userList.setBounds(689, 59, 143, 339);
 		panel.add(userList);
 
 		JLabel lblUserOnline = new JLabel("User Online");
@@ -140,6 +149,7 @@ public class ChatClientWindow extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(255, 255, 255, 100));
 		tabbedPane.addTab("Main", null, panel_1, null);
+		tabbedPane.setFont(font);
 		panel_1.setLayout(null);
 
 		scrollPane = new JScrollPane();
@@ -150,22 +160,26 @@ public class ChatClientWindow extends JFrame {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		textPane = new JTextPane();
+		textPane.setFont(font);
 		textPane.setBackground(new Color(255, 255, 255, 255));
 		scrollPane.setViewportView(textPane);
 		textPane.setEditable(false);
 
 		EnterMessage = new JTextField();
+		EnterMessage.setFont(font);
 		EnterMessage.setBounds(10, 350, 309, 21);
 		panel_1.add(EnterMessage);
 		EnterMessage.setColumns(10);
 
 		JButton btnSend = new JButton("Send");
+		btnSend.setFont(font);
 		btnSend.setBounds(10, 381, 87, 23);
 		panel_1.add(btnSend);
 		
 		
 		final JButton btnEiconProfile = new JButton("");
-		btnEiconProfile.setBounds(370, 343, 60, 60);
+		btnEiconProfile.setBounds(370, 341, 64, 64);
+		btnEiconProfile.setFocusPainted(false); 
 		btnEiconProfile.setIcon(new ImageIcon("image/emoticon/profile.jpg"));
 		btnEiconProfile.setRolloverIcon(new ImageIcon("image/emoticon/profile.jpg"));
 		panel_1.add(btnEiconProfile);
@@ -192,6 +206,7 @@ public class ChatClientWindow extends JFrame {
 				btnEicon.setIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
 				btnEicon.setRolloverIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
 			}
+			btnEicon.setFocusPainted(false); 
 			popupMenu.add(btnEicon);
 			btnEiconList.add(btnEicon);
 			btnEiconList.get(i).addActionListener(new ActionListener() {
@@ -204,24 +219,29 @@ public class ChatClientWindow extends JFrame {
 			
 
 		JButton btnChatroom = new JButton("New Chat Room");
+		btnChatroom.setFont(font);
 
 		btnChatroom.setBounds(10, 217, 124, 23);
 		panel.add(btnChatroom);
 
 		JButton btnAddMember = new JButton("Add Member");
-		btnAddMember.setBounds(699, 419, 124, 23);
+		btnAddMember.setFont(font);
+		btnAddMember.setBounds(693, 410, 130, 23);
 		panel.add(btnAddMember);
 
 		JButton btnSecret = new JButton("Secret Message");
-		btnSecret.setBounds(699, 452, 124, 23);
+		btnSecret.setFont(font);
+		btnSecret.setBounds(693, 442, 130, 23);
 		panel.add(btnSecret);
 
 		JButton btnSendFile = new JButton("Send File");
-		btnSendFile.setBounds(699, 485, 124, 23);
+		btnSendFile.setFont(font);
+		btnSendFile.setBounds(693, 475, 130, 23);
 		panel.add(btnSendFile);
 		
 		JButton btnVideo = new JButton("Video");
-		btnVideo.setBounds(699, 518, 124, 23);
+		btnVideo.setFont(font);
+		btnVideo.setBounds(693, 508, 130, 23);
 		panel.add(btnVideo);
 
 		// }}
