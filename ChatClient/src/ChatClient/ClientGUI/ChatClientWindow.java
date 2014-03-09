@@ -164,16 +164,21 @@ public class ChatClientWindow extends JFrame {
 		panel_1.add(btnSend);
 		
 		
-		JButton btnEiconProfile = new JButton("");
+		final JButton btnEiconProfile = new JButton("");
 		btnEiconProfile.setBounds(370, 343, 60, 60);
 		panel_1.add(btnEiconProfile);
 		
-		JPopupMenu popupMenu = new JPopupMenu();
+		final JPopupMenu popupMenu = new JPopupMenu();
 		popupMenu.setPopupSize(new Dimension(300, 300));
 		popupMenu.setAutoscrolls(true);
 		popupMenu.setLayout(new GridLayout(5, 5));
 		//popupMenu.s;
-		addPopup(btnEiconProfile, popupMenu);
+		btnEiconProfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				popupMenu.show(btnEiconProfile, 40, 40);
+			}
+		});
+		//addPopup(btnEiconProfile, popupMenu);
 
 		// Add by Fred
 		for(int i=0; i<25; i++){
