@@ -286,7 +286,7 @@ public class ChatClientWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String userName = userList.getSelectedItem();
 				if (userName != null) {
-					SendFile s = new SendFile(userName, ClientObject);
+					SendFileGUI s = new SendFileGUI(userName, ClientObject);
 					s.setLocationRelativeTo(thisFrame);
 					s.setVisible(true);
 				} else {

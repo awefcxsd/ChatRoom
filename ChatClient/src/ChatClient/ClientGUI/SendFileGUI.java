@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import ChatClient.ClientCom.ChatSlaveClient;
+import ChatClient.ClientCom.FileSender;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -17,15 +18,17 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
 
-public class SendFile extends JDialog {
+public class SendFileGUI extends JDialog {
 	private JTextField textField;
 	String receiver;
 	ChatSlaveClient ClientObject;
 	JFileChooser opener = new JFileChooser();
 	File sendFile;
 	private JTextField Status;
+	private SendFileGUI sendFileGUI;
 
-	public SendFile(String recv, ChatSlaveClient user) {
+	public SendFileGUI(String recv, ChatSlaveClient user) {
+		sendFileGUI=this;
 		receiver = recv;
 		ClientObject = user;
 
@@ -81,7 +84,10 @@ public class SendFile extends JDialog {
 					if (!textField.getText().isEmpty()) {
 						sendFile = new File(textField.getText());
 						Status.setText("Status : Wait for accept");
+						FileSender f=new FileSender(sendFile, sendFileGUI);
 						
+						Thread thd = new Thread(f);
+						thd.start();
 					}
 				} catch (Exception e2) {
 					Status.setText("Status : Cannot open file");

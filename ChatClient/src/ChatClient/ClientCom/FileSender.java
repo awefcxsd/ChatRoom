@@ -11,22 +11,16 @@ import java.net.Socket;
 
 import org.omg.CORBA.portable.OutputStream;
 
-import ChatClient.ClientGUI.SendFile;
+import ChatClient.ClientGUI.SendFileGUI;
 
 public class FileSender implements Runnable {
 	ServerSocket servsock;
 	File sendFile;
-	SendFile GUI;
+	SendFileGUI GUI;
 
-	public FileSender(File f,SendFile g) {
+	public FileSender(File f,SendFileGUI g) {
 		sendFile = f;
 		GUI=g;
-		try {
-			ServerSocket servsock = new ServerSocket(9988);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Override
