@@ -177,7 +177,7 @@ public class ChatClientWindow extends JFrame {
 		//popupMenu.s;
 		btnEiconProfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				popupMenu.show(btnEiconProfile, 40, 40);
+				popupMenu.show(btnEiconProfile, 50, 50);
 			}
 		});
 		//addPopup(btnEiconProfile, popupMenu);
@@ -412,7 +412,7 @@ public class ChatClientWindow extends JFrame {
 	}
 	
 	// Add by Fred
-	public void addRoomIcon(String roomNumber, String add,
+	public void addRoomIcon(String roomNumber, String add, String IconIndex,
 			SimpleAttributeSet texture) {
 		try {
 			StyledDocument roomDoc;
@@ -422,11 +422,16 @@ public class ChatClientWindow extends JFrame {
 					roomDoc = room.getDoc();
 					roomDoc.insertString(roomDoc.getLength(), add , texture);
 					room.textPane.setCaretPosition(roomDoc.getLength());
-					room.textPane.insertIcon(new ImageIcon("image/emoticon/01.gif"));					
+					int intIcon = Integer.valueOf(IconIndex);
+					if(intIcon >= 1 && intIcon <= 9){
+						room.textPane.insertIcon(new ImageIcon("image/emoticon/0"+ IconIndex + ".gif"));	
+					}else{
+						room.textPane.insertIcon(new ImageIcon("image/emoticon/"+ IconIndex + ".gif"));	
+					}				
 					roomDoc.insertString(roomDoc.getLength(), "\n" , texture);
 					JScrollBar sBar = scrollPane.getVerticalScrollBar();
 					sBar.setValue(sBar.getMaximum());
-					break;
+					break;					
 				}
 			}
 

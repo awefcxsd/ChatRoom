@@ -1,6 +1,8 @@
 package ChatClient.ClientGUI;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -9,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -71,10 +74,41 @@ public class RoomPanel extends JPanel {
 		btnLeave.setBounds(120, 381, 87, 23);
 		this.add(btnLeave);
 
-		btnEicon = new JButton();
-		btnEicon.setIcon(new ImageIcon("image/emoticon/01.gif"));
-		btnEicon.setBounds(370, 343, 60, 60);
-		this.add(btnEicon);
+		final JButton btnEiconProfile = new JButton("");
+		btnEiconProfile.setBounds(370, 343, 60, 60);
+		btnEiconProfile.setIcon(new ImageIcon("image/emoticon/profile.jpg"));
+		btnEiconProfile.setRolloverIcon(new ImageIcon("image/emoticon/profile.jpg"));
+		this.add(btnEiconProfile);
+		
+		final JPopupMenu popupMenu = new JPopupMenu();
+		popupMenu.setPopupSize(new Dimension(300, 300));
+		popupMenu.setAutoscrolls(true);
+		popupMenu.setLayout(new GridLayout(5, 5));
+		btnEiconProfile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				popupMenu.show(btnEiconProfile, 50, 50);
+			}
+		});
+		
+		// Add by Fred
+		for(int i=0; i<25; i++){
+			btnEicon = new JButton(); 
+			if(i>=0 && i<=8){
+				btnEicon.setIcon(new ImageIcon("image/emoticon/0"+ String.valueOf(i+1) + ".gif"));
+				btnEicon.setRolloverIcon(new ImageIcon("image/emoticon/0"+ String.valueOf(i+1) + ".gif"));
+			} else{
+				btnEicon.setIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
+				btnEicon.setRolloverIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
+			}
+			popupMenu.add(btnEicon);
+			btnEiconList.add(btnEicon);
+			btnEiconList.get(i).addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					client.send("/roomIcon "+ String.valueOf(btnEiconList.indexOf(arg0.getSource())+1) + " " + roomName );
+				}
+			});
+		}
+
 		
 		memberLabel = new JTextField("Members: ");
 		memberLabel.setBounds(0, 0, 472, 23);
@@ -104,11 +138,6 @@ public class RoomPanel extends JPanel {
 		btnLeave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				client.send("/leaveRoom " + roomName);
-			}
-		});
-		btnEicon.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				client.send("/roomIcon " + roomName);
 			}
 		});
 

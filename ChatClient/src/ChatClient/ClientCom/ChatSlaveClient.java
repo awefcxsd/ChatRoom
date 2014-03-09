@@ -113,11 +113,12 @@ public class ChatSlaveClient implements Runnable {
 			
 			// Add by Fred
 		} else if (transferLine.startsWith("/roomIcon")) {
-			String roomNumber = transferLine.split(" ", 3)[1];
-			String sender = transferLine.split(" ", 3)[2];
+			String IconIndex = transferLine.split(" ", 4)[1];
+			String roomNumber = transferLine.split(" ", 4)[2];
+			String sender = transferLine.split(" ", 4)[3];
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
-			GUIObject.addRoomIcon(roomNumber, sender + " : ", recv);
+			GUIObject.addRoomIcon(roomNumber, sender + " : ", IconIndex ,recv);
 			
 			// Add by Sid
 		} else if (transferLine.startsWith("/leaveRoom")) {
