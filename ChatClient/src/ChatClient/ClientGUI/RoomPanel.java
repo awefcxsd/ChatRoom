@@ -34,6 +34,7 @@ public class RoomPanel extends JPanel {
 	public JButton btnSend;
 	public JButton btnEicon;
 	private Vector <JButton> btnEiconList;
+	private Vector <JButton> btnEiconGList;
 	
 	public String roomName;
 	public StyledDocument doc;
@@ -49,6 +50,7 @@ public class RoomPanel extends JPanel {
 		client = clientObject;
 		roomUsers = new Vector<String>();
 		btnEiconList = new  Vector <JButton>();
+		btnEiconGList = new  Vector <JButton>();
 
 		this.setBackground(new Color(255, 255, 255, 100));
 		// tabbedPane.addTab("Main", null, this, null);
@@ -138,10 +140,10 @@ public class RoomPanel extends JPanel {
 			}
 			btnEicon.setFocusPainted(false);
 			popupMenuG.add(btnEicon);
-			btnEiconList.add(btnEicon);
-			btnEiconList.get(i).addActionListener(new ActionListener() {
+			btnEiconGList.add(btnEicon);
+			btnEiconGList.get(i).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					client.send("/roomGIcon "+ String.valueOf(btnEiconList.indexOf(arg0.getSource())+1) + " " + roomName );
+					client.send("/roomGIcon "+ String.valueOf(btnEiconGList.indexOf(arg0.getSource())+1) + " " + roomName );
 				}
 			});
 		}
