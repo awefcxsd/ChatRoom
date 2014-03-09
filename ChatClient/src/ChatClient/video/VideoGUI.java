@@ -175,7 +175,6 @@ public class VideoGUI extends JFrame {
 			byte[] packet = baStream.toByteArray();
 
 			// Send JPEG data as a datagram
-			System.out.println("Sending datagram with " + packet.length + " bytes");
 			try {
 				ds.send(new DatagramPacket(packet, packet.length, InetAddress.getByName(IpAddr), 9100));
 			} catch (Exception e) {
