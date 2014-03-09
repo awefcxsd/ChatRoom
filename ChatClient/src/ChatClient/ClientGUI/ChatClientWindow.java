@@ -1,6 +1,5 @@
 package ChatClient.ClientGUI;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import java.awt.GridLayout;
@@ -17,7 +16,6 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 
 import ChatClient.ClientCom.ChatSlaveClient;
-import ChatClient.util.ImageComponent;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -27,14 +25,10 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JComboBox;
 
-import java.awt.Image;
 import java.awt.List;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.MediaTracker;
-import java.awt.Toolkit;
 import java.util.Vector;
-
 import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
@@ -43,13 +37,10 @@ import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
 import javax.swing.JPopupMenu;
-
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
-import java.io.File;
-import java.io.IOException;
 
 public class ChatClientWindow extends JFrame {
 	/**
@@ -162,7 +153,7 @@ public class ChatClientWindow extends JFrame {
 		panel_1.setLayout(null);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBackground(new Color(255, 255, 255, 0));
+		scrollPane.setBackground(new Color(255, 255, 255, 255));
 		scrollPane.setBounds(0, 0, 472, 332);
 		panel_1.add(scrollPane);
 		scrollPane
@@ -252,24 +243,6 @@ public class ChatClientWindow extends JFrame {
 		btnVideo.setFont(font);
 		btnVideo.setBounds(693, 508, 130, 23);
 		panel.add(btnVideo);
-		
-//		ImageComponent back=new ImageComponent();
-//		back.setBounds(0, 0, 1000, 1000);
-//		Image image;
-//		try {
-//			image = ImageIO.read(new File("image/back1.jpg"));
-//			back.setImage(image);
-//		} catch (IOException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-//		
-//		panel.add(back);
-		
-		JLabel backLabel = new JLabel("");
-		backLabel.setIcon(new ImageIcon("image/insta.gif"));
-		backLabel.setBounds(0, 0, 877, 562);
-		panel.add(backLabel);
 
 		// }}
 

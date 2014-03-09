@@ -39,6 +39,7 @@ public class RoomPanel extends JPanel {
 
 	private JTextField memberLabel;
 	private JButton btnLeave;
+	private JButton btnVibrate;
 
 	public RoomPanel(ChatSlaveClient clientObject) {
 		Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, 12);
@@ -115,6 +116,16 @@ public class RoomPanel extends JPanel {
 				}
 			});
 		}
+		
+		btnVibrate = new JButton("Vibrate");
+		btnVibrate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				client.send("/roomAlarm " + roomName);
+			}
+		});
+		btnVibrate.setFont(new Font("DialogInput", Font.PLAIN, 12));
+		btnVibrate.setBounds(230, 381, 87, 23);
+		add(btnVibrate);
 
 		
 		memberLabel = new JTextField("Members: ");

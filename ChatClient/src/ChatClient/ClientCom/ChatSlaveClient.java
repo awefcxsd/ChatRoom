@@ -13,6 +13,7 @@ import javax.swing.text.StyleConstants;
 
 import ChatClient.ClientGUI.ChatClientWindow;
 import ChatClient.ClientGUI.RoomPanel;
+import ChatClient.util.Vibration;
 import ChatClient.video.VideoGUI;
 
 public class ChatSlaveClient implements Runnable {
@@ -156,18 +157,22 @@ public class ChatSlaveClient implements Runnable {
 			JOptionPane.showMessageDialog(GUIObject, msg,
 					"Secret Message from " + sender,
 					JOptionPane.INFORMATION_MESSAGE);
+			
 		} else if (transferLine.startsWith("/newUser")) {
 			String newUser = transferLine.split(" ", 2)[1];
 			GUIObject.addUser(newUser);
+			
 		} else if (transferLine.startsWith("/userLeave ")) {
 			String leave = transferLine.split(" ", 2)[1];
 			GUIObject.removeUser(leave);
+			
 		} else if (transferLine.startsWith("/recvFile")) {
 			String sender = transferLine.split(" ", 3)[1];
 			String ip = transferLine.split(" ", 3)[2];
 			FileReceiver fs= new FileReceiver(ip,sender,GUIObject);
 			Thread thd=new Thread(fs);
 			thd.start();
+			
 			//add by Michael
 		} else if (transferLine.startsWith("/videoStream")) {
 			String sender = transferLine.split(" ", 3)[1];
@@ -175,6 +180,18 @@ public class ChatSlaveClient implements Runnable {
 			VideoGUI fs= new VideoGUI(ip,sender);
 			fs.setLocationRelativeTo(GUIObject);
 			fs.setVisible(true);
+			
+		} else if (transferLine.startsWith("/roomAlarm")) {
+			String roomNumber = transferLine.split(" ", 3)[1];
+			String sender = transferLine.split(" ", 3)[2];
+			
+			Vibration vibrate = new Vibration(GUIObject);
+			Thread thd = new Thread(vibrate);
+			thd.start();
+			
+			SimpleAttributeSet recv = new SimpleAttributeSet();
+			StyleConstants.setForeground(recv, Color.BLACK);
+			GUIObject.addRoomText(roomNumber, sender + " invokes vibration!!!! " , recv);
 		}
 
 		// System.out.println("Recv: " + transferLine);

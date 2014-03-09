@@ -153,6 +153,12 @@ public class MasterClient implements Runnable {
 			ip=ip.substring(1);
 			
 			send("/videoStream "+Recv.ClientName+" "+ip);
+			
+		} else if (msg.startsWith("/roomAlarm")) {
+			String RoomNumber = msg.split(" ", 2)[1];
+			
+			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
+			thisRoom.sendRoomMsg("/roomAlarm " + RoomNumber + " " + this.ClientName);
 		}
 
 	}
