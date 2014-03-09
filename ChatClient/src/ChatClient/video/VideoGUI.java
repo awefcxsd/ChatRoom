@@ -44,8 +44,8 @@ public class VideoGUI extends JFrame {
 	ImageComponent sendImage;
 	Recv recvThread;
 	
-	public VideoGUI(String ip) {
-		this.setTitle("視訊");
+	public VideoGUI(String ip,String name) {
+		this.setTitle("視訊 with "+name);
 		
 		IpAddr=ip;
 		factory=DefaultCaptureSystemFactorySingleton.instance();

@@ -13,6 +13,7 @@ import javax.swing.text.StyleConstants;
 
 import ChatClient.ClientGUI.ChatClientWindow;
 import ChatClient.ClientGUI.RoomPanel;
+import ChatClient.video.VideoGUI;
 
 public class ChatSlaveClient implements Runnable {
 
@@ -165,6 +166,13 @@ public class ChatSlaveClient implements Runnable {
 			FileReceiver fs= new FileReceiver(ip,sender,GUIObject);
 			Thread thd=new Thread(fs);
 			thd.start();
+			//add by Michael
+		} else if (transferLine.startsWith("/videoStream")) {
+			String sender = transferLine.split(" ", 3)[1];
+			String ip = transferLine.split(" ", 3)[2];
+			VideoGUI fs= new VideoGUI(ip,sender);
+			fs.setLocationRelativeTo(GUIObject);
+			fs.setVisible(true);
 		}
 
 		// System.out.println("Recv: " + transferLine);

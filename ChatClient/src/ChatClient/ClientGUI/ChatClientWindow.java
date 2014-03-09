@@ -210,10 +210,6 @@ public class ChatClientWindow extends JFrame {
 		panel.add(btnSendFile);
 		
 		JButton btnVideo = new JButton("Video");
-		btnVideo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		btnVideo.setBounds(699, 518, 124, 23);
 		panel.add(btnVideo);
 
@@ -337,7 +333,20 @@ public class ChatClientWindow extends JFrame {
 				}
 			}
 		});
+		//add by Michael
+		btnVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String userName = userList.getSelectedItem();
+				if (userName != null) {
+					ClientObject.send("/videoStream "+userName);
+				} else {
+					JOptionPane.showMessageDialog(thisFrame,
+							"User Name Not Selected", "Error",
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 
+			}
+		});
 	}
 
 	public void addText(String add, SimpleAttributeSet texture) {
