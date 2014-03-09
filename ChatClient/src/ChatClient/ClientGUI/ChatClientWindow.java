@@ -52,6 +52,7 @@ public class ChatClientWindow extends JFrame {
 	private JTextField EnterPort;
 	private JButton btnEicon = new JButton();
 	private Vector<JButton> btnEiconList;
+	private Vector<JButton> btnEiconGList;
 
 	JScrollPane scrollPane;
 	private List userList;
@@ -68,6 +69,7 @@ public class ChatClientWindow extends JFrame {
 	public ChatClientWindow() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		btnEiconList = new Vector<JButton>();
+		btnEiconGList = new Vector<JButton>();
 		thisFrame = this;
 		Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, 12);
 
@@ -231,10 +233,10 @@ public class ChatClientWindow extends JFrame {
 			}
 			btnEicon.setFocusPainted(false);
 			popupMenuG.add(btnEicon);
-			btnEiconList.add(btnEicon);
-			btnEiconList.get(i).addActionListener(new ActionListener() {
+			btnEiconGList.add(btnEicon);
+			btnEiconGList.get(i).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					ClientObject.send("/BoradCastGIcon " + String.valueOf(btnEiconList.indexOf(arg0.getSource()) + 1));
+					ClientObject.send("/BoradCastGIcon " + String.valueOf(btnEiconGList.indexOf(arg0.getSource()) + 1));
 				}
 			});
 		}
@@ -429,9 +431,9 @@ public class ChatClientWindow extends JFrame {
 			textPane.setCaretPosition(doc.getLength());
 			int intIcon = Integer.valueOf(IconIndex);
 			if (intIcon >= 1 && intIcon <= 9) {
-				textPane.insertIcon(new ImageIcon("image/Gricon/show/0" + IconIndex + ".gif"));
+				textPane.insertIcon(new ImageIcon("image/Gricon/show/0" + IconIndex + ".jpg"));
 			} else {
-				textPane.insertIcon(new ImageIcon("image/Gricon/show/" + IconIndex + ".gif"));
+				textPane.insertIcon(new ImageIcon("image/Gricon/show/" + IconIndex + ".jpg"));
 			}
 			doc.insertString(doc.getLength(), "\n", texture);
 			JScrollBar sBar = scrollPane.getVerticalScrollBar();
@@ -500,9 +502,9 @@ public class ChatClientWindow extends JFrame {
 					room.textPane.setCaretPosition(roomDoc.getLength());
 					int intIcon = Integer.valueOf(IconIndex);
 					if (intIcon >= 1 && intIcon <= 9) {
-						room.textPane.insertIcon(new ImageIcon("image/Gricon/show/0" + IconIndex + ".gif"));
+						room.textPane.insertIcon(new ImageIcon("image/Gricon/show/0" + IconIndex + ".jpg"));
 					} else {
-						room.textPane.insertIcon(new ImageIcon("image/Gricon/show/" + IconIndex + ".gif"));
+						room.textPane.insertIcon(new ImageIcon("image/Gricon/show/" + IconIndex + ".jpg"));
 					}
 					roomDoc.insertString(roomDoc.getLength(), "\n", texture);
 					JScrollBar sBar = scrollPane.getVerticalScrollBar();

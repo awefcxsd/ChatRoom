@@ -60,9 +60,7 @@ public class ChatSlaveClient implements Runnable {
 				socket.shutdownInput();
 				socket.shutdownOutput();
 				socket.close();
-				JOptionPane.showMessageDialog(null,
-						"This name has been occupied", "Error",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "This name has been occupied", "Error", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
 			}
 
@@ -72,13 +70,13 @@ public class ChatSlaveClient implements Runnable {
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
 			GUIObject.addText(Sender + " : " + boradCastMessage, recv);
-			
+
 		} else if (transferLine.startsWith("/BoradCastIcon")) {
 			String IconIndex = transferLine.split(" ", 3)[1];
 			String Sender = transferLine.split(" ", 3)[2];
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
-			GUIObject.addIcon(Sender + " : " , IconIndex ,recv);
+			GUIObject.addIcon(Sender + " : ", IconIndex, recv);
 
 			// Add by Sid
 		} else if (transferLine.startsWith("/BoradCastGIcon")) {
@@ -86,9 +84,9 @@ public class ChatSlaveClient implements Runnable {
 			String Sender = transferLine.split(" ", 3)[2];
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
-			GUIObject.addIcon(Sender + " : " , IconIndex ,recv);
+			GUIObject.addGIcon(Sender + " : ", IconIndex, recv);
 
-		}else if (transferLine.startsWith("/openNewRoom")) {
+		} else if (transferLine.startsWith("/openNewRoom")) {
 			RoomPanel newRoom = new RoomPanel(this);
 			String newName = transferLine.split(" ", 2)[1];
 			newRoom.setName(newName);
@@ -103,8 +101,7 @@ public class ChatSlaveClient implements Runnable {
 			for (RoomPanel room : roomList) {
 				if (room.getName().equals(roomNumber)) {
 					room.joinUser(userName);
-					System.out.println("User " + userName + " join "
-							+ roomNumber);
+					System.out.println("User " + userName + " join " + roomNumber);
 					// need to update user name list
 					break;
 				}
@@ -119,7 +116,7 @@ public class ChatSlaveClient implements Runnable {
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
 			GUIObject.addRoomText(roomNumber, sender + " : " + message, recv);
-			
+
 			// Add by Fred
 		} else if (transferLine.startsWith("/roomIcon")) {
 			String IconIndex = transferLine.split(" ", 4)[1];
@@ -127,8 +124,17 @@ public class ChatSlaveClient implements Runnable {
 			String sender = transferLine.split(" ", 4)[3];
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
-			GUIObject.addRoomIcon(roomNumber, sender + " : ", IconIndex ,recv);
-			
+			GUIObject.addRoomIcon(roomNumber, sender + " : ", IconIndex, recv);
+
+			// Add by Sid
+		} else if (transferLine.startsWith("/roomGIcon")) {
+			String IconIndex = transferLine.split(" ", 4)[1];
+			String roomNumber = transferLine.split(" ", 4)[2];
+			String sender = transferLine.split(" ", 4)[3];
+			SimpleAttributeSet recv = new SimpleAttributeSet();
+			StyleConstants.setForeground(recv, Color.BLACK);
+			GUIObject.addRoomGIcon(roomNumber, sender + " : ", IconIndex, recv);
+
 			// Add by Sid
 		} else if (transferLine.startsWith("/leaveRoom")) {
 			String roomNumber = transferLine.split(" ", 3)[1];
@@ -148,58 +154,56 @@ public class ChatSlaveClient implements Runnable {
 			String roomNumber = transferLine.split(" ", 2)[1];
 			RoomPanel removeRoom = null;
 			// RoomNumber
-			for(RoomPanel room : roomList){
-				if(room.getName().equals(roomNumber)){
+			for (RoomPanel room : roomList) {
+				if (room.getName().equals(roomNumber)) {
 					removeRoom = room;
 					GUIObject.removeRoom(removeRoom);
-			    break;
+					break;
 				}
 
 			}
-			
+
 			roomList.remove(removeRoom);
 
 		} else if (transferLine.startsWith("/SecretMsg ")) {
 			String sender = transferLine.split(" ", 3)[1];
 			String msg = transferLine.split(" ", 3)[2];
-			JOptionPane.showMessageDialog(GUIObject, msg,
-					"Secret Message from " + sender,
-					JOptionPane.INFORMATION_MESSAGE);
-			
+			JOptionPane.showMessageDialog(GUIObject, msg, "Secret Message from " + sender, JOptionPane.INFORMATION_MESSAGE);
+
 		} else if (transferLine.startsWith("/newUser")) {
 			String newUser = transferLine.split(" ", 2)[1];
 			GUIObject.addUser(newUser);
-			
+
 		} else if (transferLine.startsWith("/userLeave ")) {
 			String leave = transferLine.split(" ", 2)[1];
 			GUIObject.removeUser(leave);
-			
+
 		} else if (transferLine.startsWith("/recvFile")) {
 			String sender = transferLine.split(" ", 3)[1];
 			String ip = transferLine.split(" ", 3)[2];
-			FileReceiver fs= new FileReceiver(ip,sender,GUIObject);
-			Thread thd=new Thread(fs);
+			FileReceiver fs = new FileReceiver(ip, sender, GUIObject);
+			Thread thd = new Thread(fs);
 			thd.start();
-			
-			//add by Michael
+
+			// add by Michael
 		} else if (transferLine.startsWith("/videoStream")) {
 			String sender = transferLine.split(" ", 3)[1];
 			String ip = transferLine.split(" ", 3)[2];
-			VideoGUI fs= new VideoGUI(ip,sender);
+			VideoGUI fs = new VideoGUI(ip, sender);
 			fs.setLocationRelativeTo(GUIObject);
 			fs.setVisible(true);
-			
+
 		} else if (transferLine.startsWith("/roomAlarm")) {
 			String roomNumber = transferLine.split(" ", 3)[1];
 			String sender = transferLine.split(" ", 3)[2];
-			
+
 			Vibration vibrate = new Vibration(GUIObject);
 			Thread thd = new Thread(vibrate);
 			thd.start();
-			
+
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
-			GUIObject.addRoomText(roomNumber, sender + " invokes vibration!!!! " , recv);
+			GUIObject.addRoomText(roomNumber, sender + " invokes vibration!!!! ", recv);
 		}
 
 		// System.out.println("Recv: " + transferLine);

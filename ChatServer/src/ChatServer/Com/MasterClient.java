@@ -77,6 +77,10 @@ public class MasterClient implements Runnable {
 			String IconIndex = msg.split(" ", 2)[1];
 			mainThread.broadCast("/BoradCastIcon " + IconIndex + " " + ClientName);
 
+		} else if (msg.startsWith("/BoradCastGIcon")) {
+			String IconIndex = msg.split(" ", 2)[1];
+			mainThread.broadCast("/BoradCastGIcon " + IconIndex + " " + ClientName);
+
 		} else if (msg.startsWith("/SecretMsg")) {
 			String recieve = msg.split(" ", 3)[1];
 			String SecretMessage = msg.split(" ", 3)[2];
@@ -124,39 +128,48 @@ public class MasterClient implements Runnable {
 			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
 			thisRoom.sendRoomMsg("/roomIcon " + IconIndex + " " + RoomNumber + " " + this.ClientName);
 
-		} else if (msg.startsWith("/leaveRoom")) {
+		} 
+		else if (msg.startsWith("/roomGIcon")) {
+			String IconIndex = msg.split(" ", 3)[1];
+			String RoomNumber = msg.split(" ", 3)[2];
+
+			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
+			thisRoom.sendRoomMsg("/roomGIcon " + IconIndex + " " + RoomNumber + " " + this.ClientName);
+
+		} 
+		else if (msg.startsWith("/leaveRoom")) {
 			String RoomNumber = msg.split(" ", 2)[1];
 			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
 
 			thisRoom.removeClient(this);
 			thisRoom.sendRoomMsg("/leaveRoom " + RoomNumber + " " + this.ClientName);
 			send("/closeRoom " + RoomNumber);
-			
+
 		} else if (msg.startsWith("/sendFile")) {
 			String receiver = msg.split(" ", 2)[1];
-			String ip = ""+sock.getInetAddress();
-			ip=ip.substring(1);
-			
-			MasterClient Recv = mainThread.search(receiver);
-			
-			Recv.send("/recvFile "+ClientName+" "+ip);
-			
-		} else if (msg.startsWith("/videoStream")) {
-			String receiver = msg.split(" ", 2)[1];
-			String ip = ""+sock.getInetAddress();
-			ip=ip.substring(1);
+			String ip = "" + sock.getInetAddress();
+			ip = ip.substring(1);
 
 			MasterClient Recv = mainThread.search(receiver);
-			Recv.send("/videoStream "+ClientName+" "+ip);
-			
-			ip = ""+Recv.sock.getInetAddress();
-			ip=ip.substring(1);
-			
-			send("/videoStream "+Recv.ClientName+" "+ip);
-			
+
+			Recv.send("/recvFile " + ClientName + " " + ip);
+
+		} else if (msg.startsWith("/videoStream")) {
+			String receiver = msg.split(" ", 2)[1];
+			String ip = "" + sock.getInetAddress();
+			ip = ip.substring(1);
+
+			MasterClient Recv = mainThread.search(receiver);
+			Recv.send("/videoStream " + ClientName + " " + ip);
+
+			ip = "" + Recv.sock.getInetAddress();
+			ip = ip.substring(1);
+
+			send("/videoStream " + Recv.ClientName + " " + ip);
+
 		} else if (msg.startsWith("/roomAlarm")) {
 			String RoomNumber = msg.split(" ", 2)[1];
-			
+
 			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
 			thisRoom.sendRoomMsg("/roomAlarm " + RoomNumber + " " + this.ClientName);
 		}
