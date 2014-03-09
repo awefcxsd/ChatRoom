@@ -159,6 +159,12 @@ public class ChatSlaveClient implements Runnable {
 		} else if (transferLine.startsWith("/userLeave ")) {
 			String leave = transferLine.split(" ", 2)[1];
 			GUIObject.removeUser(leave);
+		} else if (transferLine.startsWith("/recvFile")) {
+			String sender = transferLine.split(" ", 3)[1];
+			String ip = transferLine.split(" ", 3)[2];
+			FileReceiver fs= new FileReceiver(ip,sender,GUIObject);
+			Thread thd=new Thread(fs);
+			thd.start();
 		}
 
 		// System.out.println("Recv: " + transferLine);

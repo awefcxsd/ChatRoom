@@ -83,6 +83,7 @@ public class SendFileGUI extends JDialog {
 				try {
 					if (!textField.getText().isEmpty()) {
 						sendFile = new File(textField.getText());
+						ClientObject.send("/sendFile "+receiver);
 						Status.setText("Status : Wait for accept");
 						FileSender f=new FileSender(sendFile, sendFileGUI);
 						
