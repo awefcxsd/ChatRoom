@@ -32,11 +32,11 @@ public class SecretMsg extends JDialog{
 		
 		setModal(true);
 		setTitle("Enter Secret Message to "+user);
-		setSize(365, 115);
+		setSize(356, 103);
 		getContentPane().setLayout(null);
 		
 		BackGroundPanel panel = new BackGroundPanel();
-		panel.setBounds(0, 0, 349, 77);
+		panel.setBounds(0, 0, 371, 94);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
