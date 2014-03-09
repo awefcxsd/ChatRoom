@@ -94,7 +94,6 @@ public class VideoGUI extends JFrame {
 				} catch (CaptureException e1) {
 					e1.printStackTrace();
 				}
-				System.exit(0);
 			}
 		});
 
