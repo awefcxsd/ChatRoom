@@ -11,7 +11,9 @@ import ChatClient.ClientCom.ChatSlaveClient;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.File;
+
 import javax.swing.JLabel;
+
 import java.awt.Color;
 import java.awt.Font;
 
@@ -22,6 +24,7 @@ public class SendFile extends JDialog {
 	JFileChooser opener = new JFileChooser();
 	File sendFile;
 	private JTextField Status;
+
 	public SendFile(String recv, ChatSlaveClient user) {
 		receiver = recv;
 		ClientObject = user;
@@ -37,6 +40,7 @@ public class SendFile extends JDialog {
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setBounds(27, 11, 247, 21);
 		panel.add(textField);
 		textField.setColumns(10);
@@ -48,7 +52,7 @@ public class SendFile extends JDialog {
 		JButton btnComfirm = new JButton("Comfirm");
 		btnComfirm.setBounds(284, 43, 87, 23);
 		panel.add(btnComfirm);
-		
+
 		Status = new JTextField();
 		Status.setText("Status : Waiting for user to select file");
 		Status.setEditable(false);
@@ -74,8 +78,11 @@ public class SendFile extends JDialog {
 		btnComfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					sendFile=new File(textField.getText());
-					Status.setText("Status : Wait for accept");
+					if (!textField.getText().isEmpty()) {
+						sendFile = new File(textField.getText());
+						Status.setText("Status : Wait for accept");
+						
+					}
 				} catch (Exception e2) {
 					Status.setText("Status : Cannot open file");
 				}
@@ -83,5 +90,9 @@ public class SendFile extends JDialog {
 		});
 		// }}
 
+	}
+
+	public void setStatus(String string) {
+		Status.setText(string);
 	}
 }
