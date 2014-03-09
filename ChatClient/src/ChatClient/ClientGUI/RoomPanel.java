@@ -2,6 +2,7 @@ package ChatClient.ClientGUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +41,7 @@ public class RoomPanel extends JPanel {
 	private JButton btnLeave;
 
 	public RoomPanel(ChatSlaveClient clientObject) {
-
+		Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, 12);
 		client = clientObject;
 		roomUsers = new Vector<String>();
 		btnEiconList = new  Vector <JButton>();
@@ -57,20 +58,24 @@ public class RoomPanel extends JPanel {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		textPane = new JTextPane();
+		textPane.setFont(font);
 		textPane.setBackground(new Color(255, 255, 255, 255));
 		scrollPane.setViewportView(textPane);
 		textPane.setEditable(false);
 
 		EnterMessage = new JTextField();
+		EnterMessage.setFont(font);
 		EnterMessage.setBounds(10, 350, 309, 21);
 		this.add(EnterMessage);
 		EnterMessage.setColumns(10);
 
 		btnSend = new JButton("Send");
+		btnSend.setFont(font);
 		btnSend.setBounds(10, 381, 87, 23);
 		this.add(btnSend);
 
 		btnLeave = new JButton("Leave");
+		btnLeave.setFont(font);
 		btnLeave.setBounds(120, 381, 87, 23);
 		this.add(btnLeave);
 
@@ -113,6 +118,7 @@ public class RoomPanel extends JPanel {
 
 		
 		memberLabel = new JTextField("Members: ");
+		memberLabel.setFont(font);
 		memberLabel.setBounds(0, 0, 472, 23);
 		memberLabel.setEditable(false);
 		this.add(memberLabel);
