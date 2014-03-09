@@ -74,7 +74,8 @@ public class MasterClient implements Runnable {
 			mainThread.broadCast("/BoradCastMessage " + ClientName + " " + boradCastMessage);
 
 		} else if (msg.startsWith("/BoradCastIcon")) {
-			mainThread.broadCast("/BoradCastIcon " + ClientName);
+			String IconIndex = msg.split(" ", 2)[1];
+			mainThread.broadCast("/BoradCastIcon " + IconIndex + " " + ClientName);
 
 		} else if (msg.startsWith("/SecretMsg")) {
 			String recieve = msg.split(" ", 3)[1];

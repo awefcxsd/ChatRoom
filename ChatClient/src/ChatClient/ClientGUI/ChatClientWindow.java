@@ -28,7 +28,7 @@ import javax.swing.JComboBox;
 import java.awt.List;
 import java.awt.Color;
 import java.awt.Font;
-
+import java.util.Vector;
 import javax.swing.JTabbedPane;
 
 import java.awt.BorderLayout;
@@ -50,7 +50,9 @@ public class ChatClientWindow extends JFrame {
 	private JTextField EnterMessage;
 	private JTextField EnterIP;
 	private JTextField EnterPort;
-	private JButton btnEicon []= new JButton [25];
+	private JButton btnEicon = new JButton();
+	private Vector <JButton> btnEiconList;
+	
 	JScrollPane scrollPane;
 	private List userList;
 	private ChatSlaveClient ClientObject;
@@ -62,10 +64,10 @@ public class ChatClientWindow extends JFrame {
 	public JTabbedPane tabbedPane;
 	private JFrame thisFrame;
 	public JTextPane textPane;
-	int i;
 
 	public ChatClientWindow() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		btnEiconList = new  Vector <JButton>();
 		thisFrame = this;
 
 		// {{ Layout set up
@@ -174,18 +176,20 @@ public class ChatClientWindow extends JFrame {
 		addPopup(btnEiconProfile, popupMenu);
 
 		// Add by Fred
-		for(i=0; i<25; i++){
-			btnEicon[i] = new JButton(""); 
+		for(int i=0; i<25; i++){
+			btnEicon = new JButton(); 
 			if(i>=0 && i<=8){
-				btnEicon[i].setIcon(new ImageIcon("image/emoticon/0"+ String.valueOf(i+1) + ".gif"));
+				btnEicon.setIcon(new ImageIcon("image/emoticon/0"+ String.valueOf(i+1) + ".gif"));
+			} else{
+				btnEicon.setIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
 			}
-			else{
-				btnEicon[i].setIcon(new ImageIcon("image/emoticon/"+ String.valueOf(i+1) + ".gif"));
-			}
-			popupMenu.add(btnEicon[i]);
-			btnEicon[i].addActionListener(new ActionListener() {
+			popupMenu.add(btnEicon);
+			btnEiconList.add(btnEicon);
+			btnEiconList.get(i).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					ClientObject.send("/BoradCastIcon "+ String.valueOf(i+1));
+					ClientObject.send("/BoradCastIcon "+ String.valueOf(btnEiconList.indexOf(arg0.getSource())+1));
+					//this.getText();
+					//System.out.println(btnEiconList.size());
 				}
 			});
 		}
@@ -359,11 +363,17 @@ public class ChatClientWindow extends JFrame {
 		}
 	}
 	
-	public void addIcon(String add, SimpleAttributeSet texture) {
+	public void addIcon(String add, String IconIndex, SimpleAttributeSet texture) {
 		try {
 			doc.insertString(doc.getLength(), add , texture);
 			textPane.setCaretPosition(doc.getLength());
-			textPane.insertIcon(new ImageIcon("image/emoticon/01.gif"));
+			int intIcon = Integer.valueOf(IconIndex);
+			if(intIcon >= 1 && intIcon <= 9){
+				textPane.insertIcon(new ImageIcon("image/emoticon/0"+ IconIndex + ".gif"));	
+			}else{
+				textPane.insertIcon(new ImageIcon("image/emoticon/"+ IconIndex + ".gif"));	
+			}
+						
 			doc.insertString(doc.getLength(), "\n" , texture);
 			JScrollBar sBar = scrollPane.getVerticalScrollBar();
 			sBar.setValue(sBar.getMaximum());
