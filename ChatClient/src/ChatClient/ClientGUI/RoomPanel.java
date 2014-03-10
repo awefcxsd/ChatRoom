@@ -151,13 +151,13 @@ public class RoomPanel extends JPanel {
 //				}
 //			});
 //		}
-//		
-//		btnVibrate = new JButton("Vibrate");
-//		btnVibrate.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				client.send("/roomAlarm " + roomName);
-//			}
-//		});
+		
+		btnVibrate = new JButton("Vibrate");
+		btnVibrate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				client.send("/roomAlarm " + roomName);
+			}
+		});
 		btnVibrate.setFont(new Font("Eras Demi ITC", Font.PLAIN, 12));
 		btnVibrate.setBounds(300, 359, 87, 23);
 		add(btnVibrate);
