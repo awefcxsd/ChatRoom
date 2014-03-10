@@ -28,5 +28,6 @@ public class Vibration implements Runnable{
 				e.printStackTrace();
 			}
 		}
+		gui.setLocation(position.x, position.y);
 	}
 }
