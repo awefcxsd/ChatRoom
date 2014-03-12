@@ -65,11 +65,21 @@ public class ChatSlaveClient implements Runnable {
 			}
 
 		} else if (transferLine.startsWith("/BoradCastMessage")) {
-			String boradCastMessage = transferLine.split(" ", 3)[2];
-			String Sender = transferLine.split(" ", 3)[1];
+			String Sender = transferLine.split(" ", 6)[1];
+			String Style = transferLine.split(" ", 6)[2];
+			String Size = transferLine.split(" ", 6)[3];
+			String color = transferLine.split(" ", 6)[4];
+			String boradCastMessage = transferLine.split(" ", 6)[5];
+			
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
-			GUIObject.addText(Sender + " : " + boradCastMessage, recv);
+			GUIObject.addText(Sender + " : " , recv);
+			
+			StyleConstants.setFontSize(recv, Integer.parseInt(Size));
+			StyleConstants.setForeground(recv, new Color(Integer.parseInt(color)));
+			if (Integer.parseInt(Style) == 1) 
+				StyleConstants.setBold(recv, true);
+			GUIObject.addText(boradCastMessage + "\n", recv);
 
 		} else if (transferLine.startsWith("/BoradCastIcon")) {
 			String IconIndex = transferLine.split(" ", 3)[1];

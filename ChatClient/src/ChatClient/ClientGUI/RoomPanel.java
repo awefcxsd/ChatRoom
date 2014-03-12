@@ -97,12 +97,12 @@ public class RoomPanel extends JPanel {
 		this.add(btnEiconProfile);
 		
 		final JPopupMenu popupMenu = new JPopupMenu();
-		popupMenu.setPopupSize(new Dimension(300, 300));
+		popupMenu.setPopupSize(new Dimension(250, 250));
 		popupMenu.setAutoscrolls(true);
 		popupMenu.setLayout(new GridLayout(5, 5));
 		
 		final JPopupMenu popupMenuG = new JPopupMenu();
-		popupMenuG.setPopupSize(new Dimension(250, 250));
+		popupMenuG.setPopupSize(new Dimension(200, 200));
 		popupMenuG.setAutoscrolls(true);
 		popupMenuG.setLayout(new GridLayout(4, 4));
 		

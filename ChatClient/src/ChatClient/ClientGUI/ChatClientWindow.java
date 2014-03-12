@@ -19,6 +19,7 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,6 +38,15 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 
 import ChatClient.ClientCom.ChatSlaveClient;
+import ChatClient.util.colorButton;
+
+import javax.swing.JComboBox;
+
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class ChatClientWindow extends JFrame {
 	/**
@@ -49,7 +59,11 @@ public class ChatClientWindow extends JFrame {
 	private JButton btnEicon = new JButton();
 	private Vector<JButton> btnEiconList;
 	private Vector<JButton> btnEiconGList;
-
+	private String [] fontSize = { "6", "8", "10", "12", "14", "16", "18", "20", "22", "24", "26", "28", "30"};
+	private JColorChooser colorChooser;
+	private Container con = getContentPane();
+	private colorButton color; 
+	
 	JScrollPane scrollPane;
 	private List userList;
 	private ChatSlaveClient ClientObject;
@@ -207,14 +221,10 @@ public class ChatClientWindow extends JFrame {
 		});
 		addPopup(btnEiconProfile, popupMenuG);
 		
-		JButton size = new JButton("");
-		size.setBounds(215, 382, 23, 23);
-		panel_1.add(size);
-		
 		JToggleButton bold = new JToggleButton("");
 	
 		bold.setIcon(new ImageIcon("image/Font/bold.png"));
-		bold.setBounds(240, 382, 20, 20);
+		bold.setBounds(193, 382, 20, 20);
 		panel_1.add(bold);
 		
 		bold.addActionListener(new ActionListener() { 
@@ -225,12 +235,44 @@ public class ChatClientWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				((JToggleButton)e.getSource()).setIcon( flag ? icon2 : icon1 );
 				flag = !flag;
+				Font f = EnterMessage.getFont();
+				if(f.getStyle()==0) {
+					EnterMessage.setFont(f.deriveFont(1));
+				} else {
+					EnterMessage.setFont(f.deriveFont(0));
+				}
 			}
 		});
 		
-		JButton color = new JButton("");
-		color.setBounds(265, 382, 23, 23);
+		color = new colorButton();
+		color.setBounds(218, 382, 20, 20);
+		color.setButtonColor(Color.BLACK);
 		panel_1.add(color);
+		
+		color.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 colorChooser = new JColorChooser();
+				 colorButton B = (colorButton)e.getSource();
+				 Color c = colorChooser.showDialog(B, "Choose the color of words.", B.getBackground());
+				 B.setButtonColor(c);
+				 EnterMessage.setForeground(c);
+			}
+		});
+		
+
+		
+		JComboBox sizeBox = new JComboBox(fontSize);
+		sizeBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				String size = (String)e.getItem();
+				Font f = EnterMessage.getFont();
+				EnterMessage.setFont(f.deriveFont((float)Integer.valueOf(size).intValue()));;
+			}
+		});
+		
+		sizeBox.setBounds(242, 381, 48, 24);
+		sizeBox.setSelectedIndex(3);
+		panel_1.add(sizeBox);
 
 		
 		
@@ -362,7 +404,8 @@ public class ChatClientWindow extends JFrame {
 				String sendText = EnterMessage.getText();
 				EnterMessage.setText("");
 				if (!sendText.isEmpty()) {
-					ClientObject.send("/BoradCastMessage " + sendText);
+					ClientObject.send("/BoradCastMessage " + EnterMessage.getFont().getStyle() + " " + 
+									 EnterMessage.getFont().getSize() + " " + color.getButtonColor() + " " + sendText);
 				}
 			}
 		});
@@ -371,7 +414,8 @@ public class ChatClientWindow extends JFrame {
 				String sendText = EnterMessage.getText();
 				EnterMessage.setText("");
 				if (!sendText.isEmpty()) {
-					ClientObject.send("/BoradCastMessage " + sendText);
+					ClientObject.send("/BoradCastMessage " + EnterMessage.getFont().getStyle() + " " + 
+							 			EnterMessage.getFont().getSize() + " " + color.getButtonColor() + " " + sendText);
 				}
 			}
 		});
@@ -462,7 +506,7 @@ public class ChatClientWindow extends JFrame {
 
 	public void addText(String add, SimpleAttributeSet texture) {
 		try {
-			doc.insertString(doc.getLength(), add + "\n", texture);
+			doc.insertString(doc.getLength(), add , texture);
 			JScrollBar sBar = scrollPane.getVerticalScrollBar();
 			sBar.setValue(sBar.getMaximum());
 		} catch (Exception e) {

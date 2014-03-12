@@ -70,9 +70,12 @@ public class MasterClient implements Runnable {
 				mainThread.broadCast("/newUser " + ClientName);
 			}
 		} else if (msg.startsWith("/BoradCastMessage")) {
-			String boradCastMessage = msg.split(" ", 2)[1];
-			mainThread.broadCast("/BoradCastMessage " + ClientName + " " + boradCastMessage);
-
+			String Style = msg.split(" ", 5)[1];
+			String Size = msg.split(" ", 5)[2];
+			String Color = msg.split(" ", 5)[3];
+			String boradCastMessage = msg.split(" ", 5)[4];
+			mainThread.broadCast("/BoradCastMessage " + ClientName + " " + Style + " " + Size + " " + Color + " " + boradCastMessage );
+			
 		} else if (msg.startsWith("/BoradCastIcon")) {
 			String IconIndex = msg.split(" ", 2)[1];
 			mainThread.broadCast("/BoradCastIcon " + IconIndex + " " + ClientName);
