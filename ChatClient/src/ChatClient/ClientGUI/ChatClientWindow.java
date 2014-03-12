@@ -1,47 +1,42 @@
 package ChatClient.ClientGUI;
 
-import javax.swing.JFrame;
-
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.List;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.JTextPane;
+import javax.swing.JToggleButton;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyledDocument;
 
 import ChatClient.ClientCom.ChatSlaveClient;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.JComboBox;
-
-import java.awt.List;
-import java.awt.Color;
-import java.awt.Font;
-import java.util.Vector;
-import javax.swing.JTabbedPane;
-
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.BoxLayout;
-import javax.swing.SwingConstants;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.Dimension;
-import javax.swing.JToggleButton;
 
 public class ChatClientWindow extends JFrame {
 	/**
@@ -66,6 +61,15 @@ public class ChatClientWindow extends JFrame {
 	public JTabbedPane tabbedPane;
 	private JFrame thisFrame;
 	public JTextPane textPane;
+	
+	ImageIcon fishImage[];
+	Cursor fishCursor[];
+	private JTextField textField;
+	Point oldPoint;
+	Point currentPoint;
+	MouseMotionAdapter motionAdapter;
+	int count=0;
+	int imageCount = 2;
 
 	public ChatClientWindow() {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -228,6 +232,39 @@ public class ChatClientWindow extends JFrame {
 		color.setBounds(265, 382, 23, 23);
 		panel_1.add(color);
 
+		
+		
+		fishImage = new ImageIcon[imageCount];
+		fishCursor = new Cursor[imageCount];
+		
+		for(int i = 0;i<imageCount;++i){
+			int k = i+1;
+			System.out.println(i);
+			fishImage[i] = new ImageIcon("image/fish/pokemon["+k+"].png");
+			
+			System.out.println(fishImage[i]);
+			fishCursor[i]= Toolkit.getDefaultToolkit().createCustomCursor(fishImage[i].getImage(),new Point(16 ,16), "fish");
+		}
+		
+		oldPoint = new Point(0,0);
+		
+		setCursor(fishCursor[0]);
+		
+		motionAdapter = new MouseMotionAdapter() {
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				currentPoint = e.getPoint();
+				if (currentPoint.distance(oldPoint)>15){
+					setCursor(FishCursorGetter(currentPoint));
+					oldPoint = currentPoint;
+				}
+			}
+		};
+		
+		addMouseMotionListener(motionAdapter);
+		DfsAddListener(this);
+		
 
 		// Add by Fred
 		for (int i = 0; i < 25; i++) {
@@ -591,4 +628,29 @@ public class ChatClientWindow extends JFrame {
 			}
 		});
 	}
+	
+	
+	public void DfsAddListener(Container component){
+		
+		try {
+			for(Component compt: component.getComponents()){
+				compt.addMouseMotionListener(motionAdapter);
+				if(compt instanceof Container){
+					DfsAddListener((JComponent)compt);
+				}
+			}
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public Cursor FishCursorGetter(Point current){
+		
+		return fishCursor[count++%imageCount]; 
+	}
+	
+	
+	
 }
