@@ -118,11 +118,15 @@ public class MasterClient implements Runnable {
 			}
 
 		} else if (msg.startsWith("/roomMsg")) {
-			String RoomNumber = msg.split(" ", 3)[1];
-			String Message = msg.split(" ", 3)[2];
+			String RoomNumber = msg.split(" ", 6)[1];
+			String Style = msg.split(" ", 6)[2];
+			String Size = msg.split(" ", 6)[3];
+			String Color = msg.split(" ", 6)[4];
+			String Message = msg.split(" ", 6)[5];
 
 			ServerRoom thisRoom = mainThread.searchRoom(RoomNumber);
-			thisRoom.sendRoomMsg("/roomMsg " + RoomNumber + " " + this.ClientName + " " + Message);
+			thisRoom.sendRoomMsg("/roomMsg " + RoomNumber + " " + this.ClientName + " " + 
+									Style + " " + Size + " " + Color + " "+ Message);
 
 		} else if (msg.startsWith("/roomIcon")) {
 			String IconIndex = msg.split(" ", 3)[1];

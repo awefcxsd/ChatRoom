@@ -7,12 +7,15 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -23,7 +26,12 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.text.StyledDocument;
 
 import ChatClient.ClientCom.ChatSlaveClient;
+
 import javax.swing.JToggleButton;
+
+import ChatClient.util.colorButton;
+
+import javax.swing.JComboBox;
 
 //Add by Sid
 
@@ -34,9 +42,13 @@ public class RoomPanel extends JPanel {
 	public JTextField EnterMessage;
 	public JButton btnSend;
 	public JButton btnEicon;
+	private JColorChooser colorChooser;
+	private String [] fontSize = { "6", "8", "10", "12", "14", "16", "18", "20", "22", "24", "26", "28", "30"};
+	private JToggleButton bold;
+	private JComboBox sizeBox;
 	private Vector <JButton> btnEiconList;
 	private Vector <JButton> btnEiconGList;
-	
+	private colorButton color; 
 	public String roomName;
 	public StyledDocument doc;
 	public ChatSlaveClient client;
@@ -45,9 +57,6 @@ public class RoomPanel extends JPanel {
 	private JTextField memberLabel;
 	private JButton btnLeave;
 	private JButton btnVibrate;
-	private JButton button;
-	private JToggleButton toggleButton;
-	private JButton button_1;
 
 	public RoomPanel(ChatSlaveClient clientObject) {
 		Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, 12);
@@ -169,18 +178,55 @@ public class RoomPanel extends JPanel {
 		memberLabel.setEditable(false);
 		this.add(memberLabel);
 		
-		button = new JButton("");
-		button.setBounds(215, 382, 23, 23);
-		add(button);
+		bold = new JToggleButton("");
+		bold.setIcon(new ImageIcon("image/Font/bold.png"));
+		bold.setBounds(193, 382, 20, 20);
+		add(bold);
 		
-		toggleButton = new JToggleButton("");
-		toggleButton.setBounds(242, 382, 23, 23);
-		add(toggleButton);
+		bold.addActionListener(new ActionListener() { 
+			private boolean flag = true;
+			ImageIcon icon1 = new ImageIcon("image/Font/bold.png"); 
+			ImageIcon icon2	= new ImageIcon("image/Font/bold2.png");
+			public void actionPerformed(ActionEvent e) {
+				((JToggleButton)e.getSource()).setIcon( flag ? icon2 : icon1 );
+				flag = !flag;
+				Font f = EnterMessage.getFont();
+				if(f.getStyle()==0) {
+					EnterMessage.setFont(f.deriveFont(1));
+				} else {
+					EnterMessage.setFont(f.deriveFont(0));
+				}
+			}
+		});
 		
-		button_1 = new JButton("");
-		button_1.setBounds(267, 382, 23, 23);
-		add(button_1);
-
+		color = new colorButton();
+		color.setBounds(218, 382, 20, 20);
+		color.setButtonColor(Color.BLACK);
+		add(color);
+		color.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 colorChooser = new JColorChooser();
+				 colorButton B = (colorButton)e.getSource();
+				 Color c = colorChooser.showDialog(B, "Choose the color of words.", B.getBackground());
+				 B.setButtonColor(c);
+				 EnterMessage.setForeground(c);
+			}
+		});
+		
+		
+		
+		sizeBox = new JComboBox(fontSize);
+		sizeBox.setSelectedIndex(3);
+		sizeBox.setBounds(242, 381, 48, 24);
+		add(sizeBox);
+		sizeBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				String size = (String)e.getItem();
+				Font f = EnterMessage.getFont();
+				EnterMessage.setFont(f.deriveFont((float)Integer.valueOf(size).intValue()));;
+			}
+		});
+		
 		doc = textPane.getStyledDocument();
 
 		btnSend.addActionListener(new ActionListener() {
@@ -188,7 +234,8 @@ public class RoomPanel extends JPanel {
 				String sendText = EnterMessage.getText();
 				EnterMessage.setText("");
 				if (!sendText.isEmpty()) {
-					client.send("/roomMsg " + roomName + " " + sendText);
+					client.send("/roomMsg " + roomName + " " + EnterMessage.getFont().getStyle() + " " +
+								EnterMessage.getFont().getSize() + " " + color.getButtonColor() + " " + sendText);
 				}
 			}
 		});
@@ -197,7 +244,8 @@ public class RoomPanel extends JPanel {
 				String sendText = EnterMessage.getText();
 				EnterMessage.setText("");
 				if (!sendText.isEmpty()) {
-					client.send("/roomMsg " + roomName + " " + sendText);
+					client.send("/roomMsg " + roomName + " " + EnterMessage.getFont().getStyle() + " " +
+								EnterMessage.getFont().getSize() + " " + color.getButtonColor() + " " + sendText);
 				}
 			}
 		});
@@ -271,6 +319,4 @@ public class RoomPanel extends JPanel {
 			}
 		});
 	}
-	
-	
 }

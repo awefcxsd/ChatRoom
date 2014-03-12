@@ -60,10 +60,10 @@ public class ChatClientWindow extends JFrame {
 	private Vector<JButton> btnEiconList;
 	private Vector<JButton> btnEiconGList;
 	private String [] fontSize = { "6", "8", "10", "12", "14", "16", "18", "20", "22", "24", "26", "28", "30"};
+	private JToggleButton bold;
 	private JColorChooser colorChooser;
-	private Container con = getContentPane();
 	private colorButton color; 
-	
+	private JComboBox sizeBox;
 	JScrollPane scrollPane;
 	private List userList;
 	private ChatSlaveClient ClientObject;
@@ -221,17 +221,16 @@ public class ChatClientWindow extends JFrame {
 		});
 		addPopup(btnEiconProfile, popupMenuG);
 		
-		JToggleButton bold = new JToggleButton("");
-	
+		
+		// Font manipulation
+		bold = new JToggleButton("");
 		bold.setIcon(new ImageIcon("image/Font/bold.png"));
 		bold.setBounds(193, 382, 20, 20);
 		panel_1.add(bold);
-		
 		bold.addActionListener(new ActionListener() { 
 			private boolean flag = true;
 			ImageIcon icon1 = new ImageIcon("image/Font/bold.png"); 
 			ImageIcon icon2	= new ImageIcon("image/Font/bold2.png");
-
 			public void actionPerformed(ActionEvent e) {
 				((JToggleButton)e.getSource()).setIcon( flag ? icon2 : icon1 );
 				flag = !flag;
@@ -244,11 +243,23 @@ public class ChatClientWindow extends JFrame {
 			}
 		});
 		
+		
+		sizeBox = new JComboBox(fontSize);
+		sizeBox.setBounds(242, 381, 48, 24);
+		sizeBox.setSelectedIndex(3);
+		panel_1.add(sizeBox);
+		sizeBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				String size = (String)e.getItem();
+				Font f = EnterMessage.getFont();
+				EnterMessage.setFont(f.deriveFont((float)Integer.valueOf(size).intValue()));;
+			}
+		});
+
 		color = new colorButton();
 		color.setBounds(218, 382, 20, 20);
 		color.setButtonColor(Color.BLACK);
 		panel_1.add(color);
-		
 		color.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 colorChooser = new JColorChooser();
@@ -261,19 +272,6 @@ public class ChatClientWindow extends JFrame {
 		
 
 		
-		JComboBox sizeBox = new JComboBox(fontSize);
-		sizeBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				String size = (String)e.getItem();
-				Font f = EnterMessage.getFont();
-				EnterMessage.setFont(f.deriveFont((float)Integer.valueOf(size).intValue()));;
-			}
-		});
-		
-		sizeBox.setBounds(242, 381, 48, 24);
-		sizeBox.setSelectedIndex(3);
-		panel_1.add(sizeBox);
-
 		
 		
 		fishImage = new ImageIcon[imageCount];
@@ -559,7 +557,7 @@ public class ChatClientWindow extends JFrame {
 			for (RoomPanel room : ClientObject.roomList) {
 				if (room.getName().equals(roomNumber)) {
 					roomDoc = room.getDoc();
-					roomDoc.insertString(roomDoc.getLength(), add + "\n", texture);
+					roomDoc.insertString(roomDoc.getLength(), add , texture);
 					JScrollBar sBar = room.scrollPane.getVerticalScrollBar();
 					sBar.setValue(sBar.getMaximum());
 					break;
