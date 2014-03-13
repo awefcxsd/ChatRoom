@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
@@ -80,6 +81,7 @@ public class ChatSlaveClient implements Runnable {
 			if (Integer.parseInt(Style) == 1) 
 				StyleConstants.setBold(recv, true);
 			GUIObject.addText(boradCastMessage + "\n", recv);
+			
 
 		} else if (transferLine.startsWith("/BoradCastIcon")) {
 			String IconIndex = transferLine.split(" ", 3)[1];

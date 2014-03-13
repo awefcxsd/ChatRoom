@@ -64,7 +64,7 @@ public class ChatClientWindow extends JFrame {
 	private JColorChooser colorChooser;
 	private colorButton color; 
 	private JComboBox sizeBox;
-	JScrollPane scrollPane;
+	public JScrollPane scrollPane;
 	private List userList;
 	private ChatSlaveClient ClientObject;
 	private StyledDocument doc;
