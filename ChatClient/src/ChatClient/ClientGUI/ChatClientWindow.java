@@ -303,8 +303,8 @@ public class ChatClientWindow extends JFrame {
 		};
 		
 		addMouseMotionListener(motionAdapter);
-		DfsAddListener(this);
-		
+		DfsAddListener(panel);
+		panel.addMouseMotionListener(motionAdapter);
 
 		// Add by Fred
 		for (int i = 0; i < 25; i++) {
@@ -678,7 +678,7 @@ public class ChatClientWindow extends JFrame {
 			for(Component compt: component.getComponents()){
 				compt.addMouseMotionListener(motionAdapter);
 				if(compt instanceof Container){
-					DfsAddListener((JComponent)compt);
+					DfsAddListener((Container)compt);
 				}
 			}
 		} 
