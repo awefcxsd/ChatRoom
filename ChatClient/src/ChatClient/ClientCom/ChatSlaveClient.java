@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -29,6 +30,7 @@ public class ChatSlaveClient implements Runnable {
 	private Thread thread;
 	private String username;
 	public Vector<RoomPanel> roomList;
+	private Random random = new Random();
 
 	public ChatSlaveClient(ChatClientWindow chatClientWindow) {
 		GUIObject = chatClientWindow;
@@ -71,17 +73,16 @@ public class ChatSlaveClient implements Runnable {
 			String Size = transferLine.split(" ", 6)[3];
 			String color = transferLine.split(" ", 6)[4];
 			String boradCastMessage = transferLine.split(" ", 6)[5];
-			
+
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
-			GUIObject.addText(Sender + " : " , recv);
-			
+			GUIObject.addText(Sender + " : ", recv);
+
 			StyleConstants.setFontSize(recv, Integer.parseInt(Size));
 			StyleConstants.setForeground(recv, new Color(Integer.parseInt(color)));
-			if (Integer.parseInt(Style) == 1) 
+			if (Integer.parseInt(Style) == 1)
 				StyleConstants.setBold(recv, true);
 			GUIObject.addText(boradCastMessage + "\n", recv);
-			
 
 		} else if (transferLine.startsWith("/BoradCastIcon")) {
 			String IconIndex = transferLine.split(" ", 3)[1];
@@ -128,18 +129,17 @@ public class ChatSlaveClient implements Runnable {
 			String Size = transferLine.split(" ", 7)[4];
 			String color = transferLine.split(" ", 7)[5];
 			String message = transferLine.split(" ", 7)[6];
-			
-			
+
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
-			GUIObject.addRoomText(roomNumber, sender + " : " , recv);
-			
+			GUIObject.addRoomText(roomNumber, sender + " : ", recv);
+
 			StyleConstants.setFontSize(recv, Integer.parseInt(Size));
 			StyleConstants.setForeground(recv, new Color(Integer.parseInt(color)));
-			if (Integer.parseInt(Style) == 1) 
+			if (Integer.parseInt(Style) == 1)
 				StyleConstants.setBold(recv, true);
 			GUIObject.addRoomText(roomNumber, message + "\n", recv);
-			
+
 			// Add by Fred
 		} else if (transferLine.startsWith("/roomIcon")) {
 			String IconIndex = transferLine.split(" ", 4)[1];
@@ -225,14 +225,42 @@ public class ChatSlaveClient implements Runnable {
 			thd.start();
 
 			SimpleAttributeSet recv = new SimpleAttributeSet();
-			StyleConstants.setForeground(recv, Color.BLACK);
-			GUIObject.addRoomText(roomNumber, sender + " invokes vibration!!!! \n", recv);
+			StyleConstants.setForeground(recv, new Color((int) Math.floor(random.nextDouble() * 256),(int) Math.floor(random.nextDouble() * 256),(int) Math.floor(random.nextDouble() * 256),255));
+			StyleConstants.setFontSize(recv, Integer.parseInt("30"));
+			String randomS = getRandomString();
+			GUIObject.addRoomText(roomNumber, sender + " : " + randomS + "\n", recv);
 		}
 
 		// System.out.println("Recv: " + transferLine);
 		// SimpleAttributeSet recv = new SimpleAttributeSet();
 		// StyleConstants.setForeground(recv, Color.RED);
 		// GUIObject.addText("Recv: " + transferLine, recv);
+	}
+
+	private String getRandomString() {
+		// TODO Auto-generated method stub
+		String randomS;
+		int ranNum = (int) Math.floor(random.nextDouble() * 7);
+		switch (ranNum) {
+		case 0:
+			randomS="退回服貿!!!";
+			break;
+		case 1:
+			randomS="捍衛民主!!!";
+			break;
+		case 2:
+			randomS="馬英九下台!!!";
+			break;
+		case 4:
+			randomS="占領立法院!!!";
+			break;
+		case 5:
+			randomS="占領行政院!!!";
+			break;
+		default:
+			randomS="占領總統府!!!";
+		}
+		return randomS;
 	}
 
 	public void connectToServer(String ip, int port2, String name) {
