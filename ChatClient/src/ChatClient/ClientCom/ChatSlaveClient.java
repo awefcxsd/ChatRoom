@@ -226,7 +226,7 @@ public class ChatSlaveClient implements Runnable {
 
 			SimpleAttributeSet recv = new SimpleAttributeSet();
 			StyleConstants.setForeground(recv, Color.BLACK);
-			GUIObject.addRoomText(roomNumber, sender + " invokes vibration!!!! ", recv);
+			GUIObject.addRoomText(roomNumber, sender + " invokes vibration!!!! \n", recv);
 		}
 
 		// System.out.println("Recv: " + transferLine);
